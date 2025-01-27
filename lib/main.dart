@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
+import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
 
@@ -24,12 +25,16 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routename: (context) => const HomeScreen(),
         OnBoarding.routename: (context) => OnBoarding(),
-          LoginScreen.routeName: (context) => LoginScreen(),
+        Updateprofile.routename: (context) => Updateprofile(),
+        LoginScreen.routeName: (context) => LoginScreen(),
         },
-        initialRoute: LoginScreen.routeName
-        //MyServices.getString("step") == "1"
-        // ? HomeScreen.routename
-        // : OnBoarding.routename,
+     initialRoute: MyServices.getString("step") == "1"
+        ? HomeScreen.routename
+        : OnBoarding.routename,
         );
+      
+      },
+    );
+
   }
 }

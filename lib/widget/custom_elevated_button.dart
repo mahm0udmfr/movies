@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustomElevatedButton extends StatelessWidget {
   String text;
-   Widget? secondwidgetUnderText;
+  Widget? secondwidgetUnderText;
   Color? backgroundColor;
   Widget? prefixIconButton;
   Widget? suffixIconButton;
@@ -31,8 +31,8 @@ class CustomElevatedButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: BorderSide(width: 2, color: AppColor.orange)),
-            backgroundColor: backgroundColor ?? AppColor.transparent,
+                ),
+            backgroundColor: backgroundColor ?? AppColor.orange,
             padding: EdgeInsets.symmetric(
                 horizontal: screenSize.width * 0.04,
                 vertical: screenSize.height * 0.019)),
@@ -45,9 +45,7 @@ class CustomElevatedButton extends StatelessWidget {
             SizedBox(
               width: screenSize.width * 0.02,
             ),
-            Text(text,
-                style: textStyle ??
-                  AppStyles.bold20Orange),
+            Text(text, style: textStyle ?? AppStyles.regular20RobotoBlack),
             center ? SizedBox() : Spacer(),
             suffixIconButton ?? SizedBox(),
           ],
