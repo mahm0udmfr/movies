@@ -11,10 +11,9 @@ class Apptheme {
         
       ),
       appBarTheme: const AppBarTheme(
-        
         color: AppColor.black,
         centerTitle: true,
-        iconTheme: IconThemeData(color: AppColor.white)
+        iconTheme: IconThemeData(color: AppColor.orange)
       ),
       drawerTheme: DrawerThemeData(backgroundColor: AppColor.black),
 
