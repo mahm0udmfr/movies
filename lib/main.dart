@@ -5,6 +5,8 @@ import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
 
+import 'Login/LoginScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MyServices.init();
@@ -24,10 +26,15 @@ class MyApp extends StatelessWidget {
         HomeScreen.routename: (context) => const HomeScreen(),
         OnBoarding.routename: (context) => OnBoarding(),
         Updateprofile.routename: (context) => Updateprofile(),
+        LoginScreen.routeName: (context) => LoginScreen(),
+        },
+     initialRoute: MyServices.getString("step") == "1"
+        ? HomeScreen.routename
+        : OnBoarding.routename,
+        );
+      
       },
-      initialRoute: MyServices.getString("step") == "1"
-          ? HomeScreen.routename
-          : Updateprofile.routename,
     );
+
   }
 }
