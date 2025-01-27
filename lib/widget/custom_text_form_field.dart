@@ -38,27 +38,29 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       obscuringCharacter: "*",
-      cursorColor: AppColor.black,
+      cursorColor: AppColor.white,
       style: style ??
-        AppStyles.regular16RobotoWhite,
+        AppStyles.regular20RobotoWhite,
       decoration: InputDecoration(
+fillColor: AppColor.grey,
+filled: true,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide:
-                BorderSide(color: borderColor ?? AppColor.black, width: 2),
+                BorderSide(color: borderColor ?? AppColor.grey, width: 2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide:
-                BorderSide(color: borderColor ?? AppColor.black, width: 2),
+                BorderSide(color: borderColor ?? AppColor.grey, width: 2),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColor.black, width: 2),
+            borderSide: BorderSide(color: AppColor.grey, width: 2),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: AppColor.black, width: 2),
+            borderSide: BorderSide(color: AppColor.grey, width: 2),
           ),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,

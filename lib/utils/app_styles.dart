@@ -24,6 +24,10 @@ class AppStyles {
   static TextStyle regular16RobotoWhite = GoogleFonts.roboto(
       fontSize: 16, fontWeight: FontWeight.normal, color: AppColor.white);
 
+  static TextStyle regular16RobotoOrange = GoogleFonts.roboto(
+      fontSize: 16, fontWeight: FontWeight.normal, color: AppColor.orange);
+
+
   static TextStyle regular20RobotoWhite = GoogleFonts.roboto(
       fontSize: 20, fontWeight: FontWeight.normal, color: AppColor.white);
 
