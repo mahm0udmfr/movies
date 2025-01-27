@@ -4,6 +4,8 @@ import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
 
+import 'Login/LoginScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MyServices.init();
@@ -22,10 +24,12 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routename: (context) => const HomeScreen(),
         OnBoarding.routename: (context) => OnBoarding(),
-      },
-      initialRoute: MyServices.getString("step") == "1"
-          ? HomeScreen.routename
-          : OnBoarding.routename,
-    );
+          LoginScreen.routeName: (context) => LoginScreen(),
+        },
+        initialRoute: LoginScreen.routeName
+        //MyServices.getString("step") == "1"
+        // ? HomeScreen.routename
+        // : OnBoarding.routename,
+        );
   }
 }
