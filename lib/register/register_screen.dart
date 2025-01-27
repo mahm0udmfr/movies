@@ -102,8 +102,8 @@ class RegisterScreen extends StatelessWidget {
                   "Already Have Account ? ",
                   style: AppStyles.regular14RobotoWhite,
                 ),
-                TextButton(
-                    onPressed: () {},
+                InkWell(
+                    onTap: () {},
                     child: Text(
                       "Login",
                       style: AppStyles.regular14Orange,
