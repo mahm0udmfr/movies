@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
-import 'package:movies/register/register_screen.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
+
+import 'Login/LoginScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routename: (context) => const HomeScreen(),
         OnBoarding.routename: (context) => OnBoarding(),
+        Updateprofile.routename: (context) => Updateprofile(),
+        LoginScreen.routeName: (context) => LoginScreen(),
         RegisterScreen.routeName : (context) => RegisterScreen(),
       },
       initialRoute: RegisterScreen.routeName
