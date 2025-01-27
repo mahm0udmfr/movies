@@ -6,7 +6,7 @@ import 'package:movies/register/register_screen.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
 
-import 'Login/LoginScreen.dart';
+import 'Login/loginscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
