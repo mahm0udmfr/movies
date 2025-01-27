@@ -3,8 +3,10 @@ import 'package:movies/forget_password/forget_password.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
+import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
+import 'Auth/Login/loginscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,9 +29,10 @@ class MyApp extends StatelessWidget {
         Updateprofile.routename: (context) => Updateprofile(),
         ForgetPassword.routename: (context) => ForgetPassword(),
       },
-      initialRoute: MyServices.getString("step") == "1"
-          ? HomeScreen.routename
-          : ForgetPassword.routename,
+      initialRoute: 
+      MyServices.getString("step") == "1"
+          ? LoginScreen.routeName
+          : OnBoarding.routename,
     );
   }
 }

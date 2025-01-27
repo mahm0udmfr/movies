@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies/Auth/Login/loginscreen.dart';
+import 'package:movies/services.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 
@@ -121,8 +123,8 @@ class OnBoardingState extends State<OnBoarding> {
         //this will make the step in myservices as 1 and 
         //this will skip the onboarding screen the next time the user opens the applecation
         
-        // MyServices.setString('step', '1');
-        // Navigator.of(context).pushReplacementNamed(LoginScreen.routename);
+        MyServices.setString('step', '1');
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       }
     });
   }
