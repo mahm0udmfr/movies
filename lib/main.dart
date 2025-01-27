@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
-import 'package:movies/register/register_screen.dart';
+import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
 
-import 'Login/loginscreen.dart';
+import 'Auth/Login/loginscreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,10 +30,10 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => LoginScreen(),
         RegisterScreen.routeName : (context) => RegisterScreen(),
       },
-      initialRoute: RegisterScreen.routeName
-      // MyServices.getString("step") == "1"
-      //     ? HomeScreen.routename
-      //     : OnBoarding.routename,
+      initialRoute: 
+      MyServices.getString("step") == "1"
+          ? LoginScreen.routeName
+          : OnBoarding.routename,
     );
   }
 }

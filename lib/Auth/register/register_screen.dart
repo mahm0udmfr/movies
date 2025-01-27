@@ -112,7 +112,9 @@ class RegisterScreen extends StatelessWidget {
                     style: AppStyles.regular14RobotoWhite,
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Login",
                         style: AppStyles.regular14Orange,

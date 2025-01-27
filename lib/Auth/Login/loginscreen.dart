@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -72,6 +73,9 @@ class LoginScreen extends StatelessWidget {
                 backgroundColor: AppColor.orange,
               ),
               InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(RegisterScreen.routeName);
+                },
                 child: Text.rich(
                     textAlign: TextAlign.center,
                     TextSpan(children: [
