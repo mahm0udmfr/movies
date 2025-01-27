@@ -27,14 +27,10 @@ class MyApp extends StatelessWidget {
         OnBoarding.routename: (context) => OnBoarding(),
         Updateprofile.routename: (context) => Updateprofile(),
         LoginScreen.routeName: (context) => LoginScreen(),
-        },
-     initialRoute: MyServices.getString("step") == "1"
-        ? HomeScreen.routename
-        : OnBoarding.routename,
-        );
-      
       },
+      initialRoute: MyServices.getString("step") == "1"
+          ? HomeScreen.routename
+          : OnBoarding.routename,
     );
-
   }
 }
