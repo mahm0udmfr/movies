@@ -9,10 +9,11 @@ import 'package:toggle_switch/toggle_switch.dart';
 class LoginScreen extends StatelessWidget {
   static String routeName = "login screen";
 
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       // backgroundColor: AppColor.black,
       body: SingleChildScrollView(
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
               ),
               ClipRRect(
                   child: Image.asset(
-                ImageAssets.Logo,
+                ImageAssets.logo,
               )),
               SizedBox(
                 height: height * 0.08,
@@ -125,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                       // border: Border.all(color: Colors.orange, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Image.asset(ImageAssets.USAIcon),
+                    child: Image.asset(ImageAssets.usaIcon),
                   ),
                   Container(
                     padding: EdgeInsets.all(4),
@@ -133,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                       // border: Border.all(color: Colors.orange, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Image.asset(ImageAssets.EGIcon),
+                    child: Image.asset(ImageAssets.egIcon),
                   ),
                 ],
                 minWidth: 70.0,
@@ -150,7 +151,7 @@ class LoginScreen extends StatelessWidget {
                 totalSwitches: 2,
                 radiusStyle: true,
                 onToggle: (index) {
-                  print('switched to: $index');
+                  // print('switched to: $index');
                 },
               ),
             ],

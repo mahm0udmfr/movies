@@ -21,6 +21,8 @@ class RegisterScreen extends StatelessWidget {
     Image.asset(ImageAssets.avatar9),
   ];
 
+  RegisterScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -30,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
         leading: Icon(Icons.arrow_back_sharp),
         title: Text(
           "Register",
-          style: AppStyles.regular16Orange,
+          style: AppStyles.regular16RobotoOrange,
         ),
       ),
       body: SingleChildScrollView(

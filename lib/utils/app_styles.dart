@@ -17,6 +17,8 @@ class AppStyles {
 
   static TextStyle bold20Orange = GoogleFonts.inter(
       fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.orange);
+
+      
   static TextStyle regular14Orange = GoogleFonts.inter(
       fontSize: 14, fontWeight: FontWeight.normal, color: AppColor.orange);
 
@@ -52,7 +54,6 @@ class AppStyles {
   static TextStyle regular14RobotoWhite = GoogleFonts.roboto(
       fontSize: 14, fontWeight: FontWeight.normal, color: AppColor.white);
 
-  static TextStyle regular14Orange = GoogleFonts.roboto(
-      fontSize: 14, fontWeight: FontWeight.normal, color: AppColor.orange);
+
 
 }
