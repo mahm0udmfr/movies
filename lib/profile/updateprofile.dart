@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/profile/update_profile_bottom_sheet.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -25,8 +26,13 @@ class Updateprofile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: ClipRRect(
-                child: Image.asset(ImageAssets.avatar1),
+              child: InkWell(
+                onTap: () {
+                  showNewsBottomShhet(context);
+                },
+                child: ClipRRect(
+                  child: Image.asset(ImageAssets.avatar1),
+                ),
               ),
             ),
             SizedBox(
@@ -72,8 +78,15 @@ class Updateprofile extends StatelessWidget {
               ],
             ),
           ],
-        ),
+        ), 
       ),
+    );
+  }
+
+  void showNewsBottomShhet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => UpdateProfileBottomSheet(),
     );
   }
 }

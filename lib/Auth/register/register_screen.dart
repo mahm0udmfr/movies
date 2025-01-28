@@ -29,7 +29,6 @@ class RegisterScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_sharp),
         title: Text(
           "Register",
           style: AppStyles.regular16RobotoOrange,
