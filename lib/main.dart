@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:movies/Auth/forget_password/forget_password.dart';
-import 'package:movies/Auth/register/register_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movies/cubit/language_cubit.dart';
+import 'package:movies/cubit/language_state.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
+
 import 'Auth/Login/loginscreen.dart';
+import 'Auth/register/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,21 +23,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: Apptheme.darkTheme,
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
-      routes: {
-        HomeScreen.routename: (context) => const HomeScreen(),
-        OnBoarding.routename: (context) => OnBoarding(),
-        Updateprofile.routename: (context) => Updateprofile(),
-        ForgetPassword.routename: (context) => ForgetPassword(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        RegisterScreen.routeName: (context) => RegisterScreen(),
-      },
-      initialRoute: MyServices.getString("step") == "1"
-          ? Updateprofile.routename
-          : OnBoarding.routename,
+    return BlocProvider(
+      create: (context) => LanguageCubit(),
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          var languageCubit = context.read<LanguageCubit>();
+          return MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              theme: Apptheme.darkTheme,
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.dark,
+              locale: Locale(languageCubit.currentLocale),
+              routes: {
+                HomeScreen.routename: (context) => const HomeScreen(),
+                OnBoarding.routename: (context) => OnBoarding(),
+                Updateprofile.routename: (context) => Updateprofile(),
+                LoginScreen.routeName: (context) => LoginScreen(),
+                RegisterScreen.routeName: (context) => RegisterScreen(),
+              },
+              initialRoute: RegisterScreen.routeName
+              // MyServices.getString("step") == "1"
+              //     ? HomeScreen.routename
+              //     : OnBoarding.routename,
+              );
+        },
+      ),
     );
   }
 }

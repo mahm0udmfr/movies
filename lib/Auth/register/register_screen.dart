@@ -1,5 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movies/cubit/language_cubit.dart';
+import 'package:movies/cubit/language_state.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -25,12 +29,13 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LanguageCubit languageCubit = LanguageCubit();
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Register",
+          AppLocalizations.of(context)!.register,
           style: AppStyles.regular16RobotoOrange,
         ),
       ),
@@ -60,17 +65,17 @@ class RegisterScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                   )),
               Text(
-                "Avatar",
+                AppLocalizations.of(context)!.avatar,
                 style: AppStyles.regular16RobotoWhite,
               ),
               CustomTextFormField(
-                hintText: "Name",
+                hintText: AppLocalizations.of(context)!.name,
                 hintStyle: AppStyles.regular16RobotoWhite,
                 prefixIcon: Image(image: AssetImage(ImageAssets.nameIcon)),
               ),
               CustomTextFormField(
                 keyboardType: TextInputType.emailAddress,
-                hintText: "Email",
+                hintText: AppLocalizations.of(context)!.email,
                 hintStyle: AppStyles.regular16RobotoWhite,
                 prefixIcon: Image(image: AssetImage(ImageAssets.emailIcon)),
               ),
@@ -78,7 +83,7 @@ class RegisterScreen extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 suffixIcon: Image(image: AssetImage(ImageAssets.hidePassIcon)),
-                hintText: "Password",
+                hintText: AppLocalizations.of(context)!.password,
                 hintStyle: AppStyles.regular16RobotoWhite,
                 prefixIcon: Image(image: AssetImage(ImageAssets.passIcon)),
               ),
@@ -86,20 +91,20 @@ class RegisterScreen extends StatelessWidget {
                 maxLines: 1,
                 obscureText: true,
                 suffixIcon: Image(image: AssetImage(ImageAssets.hidePassIcon)),
-                hintText: "Confirm Password",
+                hintText: AppLocalizations.of(context)!.confirm_password,
                 hintStyle: AppStyles.regular16RobotoWhite,
                 prefixIcon: Image(image: AssetImage(ImageAssets.passIcon)),
               ),
               CustomTextFormField(
                 keyboardType: TextInputType.number,
-                hintText: "Phone Number",
+                hintText: AppLocalizations.of(context)!.phone_number,
                 hintStyle: AppStyles.regular16RobotoWhite,
                 prefixIcon: Image(image: AssetImage(ImageAssets.phoneIcon)),
               ),
               CustomElevatedButton(
                   textStyle: AppStyles.regular20RobotoBlack,
                   backgroundColor: AppColor.orange,
-                  text: "Create Account",
+                  text: AppLocalizations.of(context)!.create_account,
                   center: true,
                   onPressed: () {}),
               Row(
@@ -107,7 +112,7 @@ class RegisterScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Already Have Account ? ",
+                    AppLocalizations.of(context)!.already_have_account,
                     style: AppStyles.regular14RobotoWhite,
                   ),
                   InkWell(
@@ -115,7 +120,7 @@ class RegisterScreen extends StatelessWidget {
                         Navigator.pop(context);
                       },
                       child: Text(
-                        "Login",
+                        AppLocalizations.of(context)!.login,
                         style: AppStyles.regular14Orange,
                       ))
                 ],
@@ -133,24 +138,38 @@ class RegisterScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(color: AppColor.orange, width: 2)),
-                child: ToggleSwitch(
-                  customWidgets: [
-                    Image(image: AssetImage(ImageAssets.egIcon)),
-                    Image(image: AssetImage(ImageAssets.usaIcon)),
-                  ],
-                  minWidth: 55.0,
-                  cornerRadius: 30.0,
-                  activeBgColors: [
-                    [AppColor.orange],
-                    [AppColor.orange]
-                  ],
-                  // activeFgColor: Colors.white,
-                  inactiveBgColor: AppColor.black,
-                  // inactiveFgColor: Colors.white,
-                  initialLabelIndex: 1,
-                  totalSwitches: 2,
-                  radiusStyle: true,
-                  onToggle: (index) {},
+                child: BlocBuilder<LanguageCubit, LanguageState>(
+                  builder: (context, state) {
+                    var languageCubit = context.read<LanguageCubit>();
+                    return ToggleSwitch(
+                      animate: true,
+                      customWidgets: [
+                        Image(image: AssetImage(ImageAssets.egIcon)),
+                        Image(image: AssetImage(ImageAssets.usaIcon)),
+                      ],
+                      minWidth: 55.0,
+                      cornerRadius: 30.0,
+                      activeBgColors: [
+                        [AppColor.orange],
+                        [AppColor.orange]
+                      ],
+                      // activeFgColor: Colors.white,
+                      inactiveBgColor: AppColor.black,
+                      // inactiveFgColor: Colors.white,
+                      initialLabelIndex:
+                          languageCubit.currentLocale == "en" ? 1 : 0,
+                      totalSwitches: 2,
+                      radiusStyle: true,
+                      onToggle: (index) {
+                        var languageCubit = context.read<LanguageCubit>();
+                        if (index == 0) {
+                          languageCubit.changeLanguage("ar");
+                        } else {
+                          languageCubit.changeLanguage("en");
+                        }
+                      },
+                    );
+                  },
                 ),
               ),
             ],
