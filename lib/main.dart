@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movies/cubit/language_cubit.dart';
+import 'package:movies/cubit/language_state.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
@@ -19,21 +23,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: Apptheme.darkTheme,
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
-      routes: {
-        HomeScreen.routename: (context) => const HomeScreen(),
-        OnBoarding.routename: (context) => OnBoarding(),
-        Updateprofile.routename: (context) => Updateprofile(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        RegisterScreen.routeName : (context) => RegisterScreen(),
-      },
-      initialRoute: RegisterScreen.routeName
-      // MyServices.getString("step") == "1"
-      //     ? HomeScreen.routename
-      //     : OnBoarding.routename,
+    return BlocProvider(
+      create: (context) => LanguageCubit(),
+      child: BlocBuilder<LanguageCubit, LanguageState>(
+        builder: (context, state) {
+          var languageCubit = context.read<LanguageCubit>();
+          return MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              theme: Apptheme.darkTheme,
+              debugShowCheckedModeBanner: false,
+              themeMode: ThemeMode.dark,
+              locale: Locale(languageCubit.currentLocale),
+              routes: {
+                HomeScreen.routename: (context) => const HomeScreen(),
+                OnBoarding.routename: (context) => OnBoarding(),
+                Updateprofile.routename: (context) => Updateprofile(),
+                LoginScreen.routeName: (context) => LoginScreen(),
+                RegisterScreen.routeName: (context) => RegisterScreen(),
+              },
+              initialRoute: RegisterScreen.routeName
+              // MyServices.getString("step") == "1"
+              //     ? HomeScreen.routename
+              //     : OnBoarding.routename,
+              );
+        },
+      ),
     );
   }
 }
