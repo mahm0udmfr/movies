@@ -6,11 +6,11 @@ import 'package:movies/cubit/language_state.dart';
 import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
-import 'package:movies/register/register_screen.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/apptheme.dart';
 
-import 'Login/LoginScreen.dart';
+import 'Auth/Login/loginscreen.dart';
+import 'Auth/register/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
