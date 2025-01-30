@@ -4,18 +4,15 @@ import 'package:movies/utils/colors.dart';
 
 class Apptheme {
   static final ThemeData darkTheme = ThemeData(
-    indicatorColor: AppColor.white,
+      indicatorColor: AppColor.white,
       primaryColor: AppColor.orange,
       scaffoldBackgroundColor: AppColor.black,
-
-
-      appBarTheme:  AppBarTheme(
-        titleTextStyle: AppStyles.regular16RobotoOrange,
-        color: AppColor.transparent,
-        centerTitle: true,
-        iconTheme: IconThemeData(color: AppColor.orange)
-      ),
-
+      bottomSheetTheme: BottomSheetThemeData(backgroundColor: AppColor.grey),
+      appBarTheme: AppBarTheme(
+          titleTextStyle: AppStyles.regular16RobotoOrange,
+          color: AppColor.transparent,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: AppColor.orange)),
       tabBarTheme: TabBarTheme(
         indicatorColor: AppColor.white,
       ));
@@ -26,7 +23,7 @@ class Apptheme {
   //     drawerTheme: DrawerThemeData(backgroundColor: AppColor.black),
   //           bottomSheetTheme: BottomSheetThemeData(
   //       backgroundColor: AppColor.white,
-        
+
   //     ),
   //     scaffoldBackgroundColor: AppColor.white,
   //     appBarTheme: AppBarTheme(
@@ -34,7 +31,6 @@ class Apptheme {
   //       centerTitle: true,
   //       iconTheme: IconThemeData(color: AppColor.black)
   //     ),
-
 
   //     tabBarTheme: TabBarTheme(
   //       indicatorColor: AppColor.black,

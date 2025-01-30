@@ -34,7 +34,6 @@ class RegisterScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_sharp),
         title: Text(
           AppLocalizations.of(context)!.register,
           style: AppStyles.regular16RobotoOrange,
@@ -117,7 +116,9 @@ class RegisterScreen extends StatelessWidget {
                     style: AppStyles.regular14RobotoWhite,
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         AppLocalizations.of(context)!.login,
                         style: AppStyles.regular14Orange,

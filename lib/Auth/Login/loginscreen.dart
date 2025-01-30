@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies/Auth/forget_password/forget_password.dart';
+import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -7,7 +9,7 @@ import 'package:movies/widget/custom_text_form_field.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class LoginScreen extends StatelessWidget {
-  static String routeName = "login screen";
+  static const String routeName = "loginscreen";
 
   const LoginScreen({super.key});
 
@@ -59,7 +61,10 @@ class LoginScreen extends StatelessWidget {
               Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(ForgetPassword.routename
+                        );
+                      },
                       child: Text(
                         "Forget Password",
                         style: AppStyles.regular14Orange,
@@ -72,6 +77,9 @@ class LoginScreen extends StatelessWidget {
                 backgroundColor: AppColor.orange,
               ),
               InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(RegisterScreen.routeName);
+                },
                 child: Text.rich(
                     textAlign: TextAlign.center,
                     TextSpan(children: [
