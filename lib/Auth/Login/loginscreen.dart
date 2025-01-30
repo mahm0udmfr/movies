@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/utils/app_styles.dart';
@@ -36,7 +37,7 @@ class LoginScreen extends StatelessWidget {
 
               ///todo:firebase auth
               CustomTextFormField(
-                hintText: "Email",
+                hintText: AppLocalizations.of(context)!.email,
                 prefixIcon: Image.asset(
                   ImageAssets.iconEmail,
                 ),
@@ -70,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                         style: AppStyles.regular14Orange,
                       ))),
               CustomElevatedButton(
-                text: "Login",
+                text: AppLocalizations.of(context)!.login,
                 center: true,
                 onPressed: () {},
                 textStyle: AppStyles.regular20RobotoBlack,
@@ -84,10 +85,11 @@ class LoginScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                     TextSpan(children: [
                       TextSpan(
-                          text: "Don't have an Account? ",
+                          text: AppLocalizations.of(context)!.dont_have_account,
                           style: AppStyles.regular16RobotoWhite),
                       TextSpan(
-                          text: "Create One", style: AppStyles.bold20Orange),
+                          text: AppLocalizations.of(context)!.create_one,
+                          style: AppStyles.bold20Orange),
                     ])),
               ),
               Row(
@@ -101,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Or",
+                    AppLocalizations.of(context)!.or,
                     style: AppStyles.bold20Orange,
                   ),
                   Expanded(
