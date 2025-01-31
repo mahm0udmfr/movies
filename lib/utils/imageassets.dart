@@ -27,8 +27,5 @@ class ImageAssets {
   static const String egIcon = "assets/images/EG_Icon.png";
   static const String userIcon = "assets/images/usericon.png";
   static const String forgetImage = "assets/images/Forgot_password.png";
-  static const String profileIcon = "assets/images/profielIcon.png";
-  static const String homeIcon = "assets/images/homeIcon.png";
-  static const String searchIcon = "assets/images/searchIcon.png";
-  static const String browsIcon = "assets/images/exploreIcon.png";
+  static const String adelShakal = "assets/images/download.jpg";
 }
