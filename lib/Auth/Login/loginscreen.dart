@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/Auth/register/register_screen.dart';
+import 'package:movies/cubit/language_cubit.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -18,7 +20,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      // backgroundColor: AppColor.black,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -48,7 +49,7 @@ class LoginScreen extends StatelessWidget {
               CustomTextFormField(
                 maxLines: 1,
                 obscureText: true,
-                hintText: "Password",
+                hintText: AppLocalizations.of(context)!.password, //"Password",
                 prefixIcon: Image.asset(
                   ImageAssets.iconPassword,
                 ),
@@ -63,11 +64,12 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(ForgetPassword.routename
-                        );
+                        Navigator.of(context)
+                            .pushNamed(ForgetPassword.routename);
                       },
                       child: Text(
-                        "Forget Password",
+                        AppLocalizations.of(context)!.forget_password,
+                        //"Forget Password",
                         style: AppStyles.regular14Orange,
                       ))),
               CustomElevatedButton(
@@ -118,7 +120,7 @@ class LoginScreen extends StatelessWidget {
               ),
               CustomElevatedButton(
                 prefixIconButton: Image.asset(ImageAssets.iconGoogle),
-                text: "Login With Google",
+                text: AppLocalizations.of(context)!.login_with_google,
                 center: true,
                 onPressed: () {},
                 textStyle: AppStyles.regular20RobotoBlack,
@@ -133,7 +135,6 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.orange, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Image.asset(ImageAssets.usaIcon),
@@ -141,7 +142,6 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      // border: Border.all(color: Colors.orange, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Image.asset(ImageAssets.egIcon),
@@ -157,11 +157,16 @@ class LoginScreen extends StatelessWidget {
                 activeFgColor: Colors.white,
                 inactiveBgColor: AppColor.black,
                 inactiveFgColor: Colors.white,
-                initialLabelIndex: 1,
+                initialLabelIndex:
+                    context.read<LanguageCubit>().currentLocale == 'en' ? 0 : 1,
                 totalSwitches: 2,
                 radiusStyle: true,
                 onToggle: (index) {
-                  // print('switched to: $index');
+                  if (index == 0) {
+                    context.read<LanguageCubit>().changeLanguage("en");
+                  } else if (index == 1) {
+                    context.read<LanguageCubit>().changeLanguage("ar");
+                  }
                 },
               ),
             ],

@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
                 LoginScreen.routeName: (context) => LoginScreen(),
                 RegisterScreen.routeName: (context) => RegisterScreen(),
               },
-              initialRoute: HomeScreen.routename
+              initialRoute: LoginScreen.routeName
               // MyServices.getString("step") == "1"
               //     ? HomeScreen.routename
               //     : OnBoarding.routename,
