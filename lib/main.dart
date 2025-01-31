@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movies/browse_screen/browse_screen.dart';
 import 'package:movies/cubit/language_cubit.dart';
 import 'package:movies/cubit/language_state.dart';
 import 'package:movies/home_screen.dart';
@@ -41,8 +42,9 @@ class MyApp extends StatelessWidget {
                 Updateprofile.routename: (context) => Updateprofile(),
                 LoginScreen.routeName: (context) => LoginScreen(),
                 RegisterScreen.routeName: (context) => RegisterScreen(),
+                BrowseScreen.routeName: (context) => BrowseScreen(),
               },
-              initialRoute: RegisterScreen.routeName
+              initialRoute: BrowseScreen.routeName
               // MyServices.getString("step") == "1"
               //     ? HomeScreen.routename
               //     : OnBoarding.routename,
