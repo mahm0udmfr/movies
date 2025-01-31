@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -15,7 +16,7 @@ class ForgetPassword extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Forget Password'),
+        title: Text(AppLocalizations.of(context)!.forget_password),
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
@@ -27,7 +28,7 @@ class ForgetPassword extends StatelessWidget {
             ),
             CustomTextFormField(
               style: AppStyles.regular16RobotoWhite,
-              hintText: "Email",
+              hintText: AppLocalizations.of(context)!.email,
               prefixIcon: Image.asset(ImageAssets.emailIcon),
             ),
             SizedBox(
@@ -36,7 +37,7 @@ class ForgetPassword extends StatelessWidget {
             CustomElevatedButton(
                 textStyle: AppStyles.regular20RobotoBlack,
                 backgroundColor: AppColor.orange,
-                text: "Verify Email",
+                text: AppLocalizations.of(context)!.verify_email,
                 center: true,
                 onPressed: () {})
           ],
