@@ -6,7 +6,6 @@ import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 
 class BrowseScreen extends StatefulWidget {
-  static const String routeName = "Browse_screen";
 
   @override
   State<BrowseScreen> createState() => _BrowseScreenState();
