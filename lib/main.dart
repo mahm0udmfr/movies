@@ -36,13 +36,13 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeMode.dark,
               locale: Locale(languageCubit.currentLocale),
               routes: {
-                HomeScreen.routename: (context) => const HomeScreen(),
+                HomeScreen.routename: (context) => HomeScreen(),
                 OnBoarding.routename: (context) => OnBoarding(),
                 Updateprofile.routename: (context) => Updateprofile(),
                 LoginScreen.routeName: (context) => LoginScreen(),
                 RegisterScreen.routeName: (context) => RegisterScreen(),
               },
-              initialRoute: RegisterScreen.routeName
+              initialRoute: HomeScreen.routename
               // MyServices.getString("step") == "1"
               //     ? HomeScreen.routename
               //     : OnBoarding.routename,
