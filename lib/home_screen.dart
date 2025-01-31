@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               label: "Search"),
           BottomNavigationBarItem(
               icon: ImageIcon(
-                AssetImage(ImageAssets.browsIcon),
+                AssetImage(ImageAssets.browseIcon),
               ),
               label: "Brows"),
           BottomNavigationBarItem(

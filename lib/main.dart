@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/cubit/language_cubit.dart';
 import 'package:movies/cubit/language_state.dart';
 import 'package:movies/home_screen.dart';
@@ -36,14 +37,15 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeMode.dark,
               locale: Locale(languageCubit.currentLocale),
               routes: {
-                HomeScreen.routename: (context) => const HomeScreen(),
-                OnBoarding.routename: (context) => OnBoarding(),
+              HomeScreen.routename: (context) => HomeScreen(),
+              OnBoarding.routename: (context) => OnBoarding(),
                 Updateprofile.routename: (context) => Updateprofile(),
                 LoginScreen.routeName: (context) => LoginScreen(),
                 RegisterScreen.routeName: (context) => RegisterScreen(),
-              },
+              ForgetPassword.routename: (context) => ForgetPassword()
+            },
             initialRoute: MyServices.getString("step") == "1"
-                ? HomeScreen.routename
+                ? LoginScreen.routeName
                 : OnBoarding.routename,
           );
         },
