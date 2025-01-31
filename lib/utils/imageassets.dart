@@ -27,5 +27,7 @@ class ImageAssets {
   static const String egIcon = "assets/images/EG_Icon.png";
   static const String userIcon = "assets/images/usericon.png";
   static const String forgetImage = "assets/images/Forgot_password.png";
-
+  static const String watchNow = "assets/images/WatchNow.png";
+  static const String availableNow = "assets/images/AvailableNow.png";
+  static const String star = "assets/images/star.png";
 }
