@@ -12,6 +12,9 @@ class AppStyles {
   static TextStyle semiBold20Black = GoogleFonts.inter(
       fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.black);
 
+  static TextStyle bold20Black = GoogleFonts.inter(
+      fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.black);
+
   static TextStyle semiBold20Orange = GoogleFonts.inter(
       fontSize: 20, fontWeight: FontWeight.w600, color: AppColor.orange);
 
