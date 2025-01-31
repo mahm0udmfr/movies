@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/colors.dart';
+import '../../utils/colors.dart';
 
 class MoviesCategoryWidget extends StatelessWidget {
   String categoryName;
@@ -9,7 +9,7 @@ class MoviesCategoryWidget extends StatelessWidget {
   TextStyle textSelectedStyle;
   TextStyle textUnSelectedStyle;
 
-  MoviesCategoryWidget({
+  MoviesCategoryWidget({super.key, 
     required this.categoryName,
     required this.isSelected,
     required this.backgroundColor,
