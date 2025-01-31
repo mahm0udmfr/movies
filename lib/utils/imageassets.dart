@@ -17,7 +17,7 @@ class ImageAssets {
   static const String emailIcon = "assets/images/emailIcon.png";
   static const String nameIcon = "assets/images/nameIcon.png";
   static const String passIcon = "assets/images/passIcon.png";
-  static const String phoneIcon = "assets/images/phoneIcon.png";
+  static const String phoneIcon = "assets/images/phoneicon.png";
   static const String hidePassIcon = "assets/images/hidePassIcon.png";
   static const String logo = "assets/images/Logo.png";
   static const String iconEmail = "assets/images/Icon_Email.png";
@@ -27,5 +27,9 @@ class ImageAssets {
   static const String egIcon = "assets/images/EG_Icon.png";
   static const String userIcon = "assets/images/usericon.png";
   static const String forgetImage = "assets/images/Forgot_password.png";
-
+  static const String adelShakal = "assets/images/download.jpg";
+  static const String homeIcon = "assets/images/homeIcon.png";
+  static const String searchIcon = "assets/images/searchIcon.png";
+  static const String profileIcon = "assets/images/profielIcon.png";
+  static const String browseIcon = "assets/images/exploreIcon.png";
 }
