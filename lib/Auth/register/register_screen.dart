@@ -29,7 +29,7 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LanguageCubit languageCubit = LanguageCubit();
+    // LanguageCubit languageCubit = LanguageCubit();
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -99,8 +99,8 @@ class RegisterScreen extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 hintText: AppLocalizations.of(context)!.phone_number,
                 hintStyle: AppStyles.regular16RobotoWhite,
-                prefixIcon: Image(image: AssetImage(ImageAssets.phoneIcon)),
-              ),
+                prefixIcon: Image.asset(ImageAssets.phoneIcon),
+              ),  
               CustomElevatedButton(
                   textStyle: AppStyles.regular20RobotoBlack,
                   backgroundColor: AppColor.orange,

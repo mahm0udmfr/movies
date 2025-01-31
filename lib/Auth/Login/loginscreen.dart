@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/cubit/language_cubit.dart';
+import 'package:movies/home_screen.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -75,7 +76,10 @@ class LoginScreen extends StatelessWidget {
               CustomElevatedButton(
                 text: AppLocalizations.of(context)!.login,
                 center: true,
-                onPressed: () {},
+                onPressed: () {
+                        Navigator.of(context)
+                            .pushReplacementNamed(HomeScreen.routename);
+                },
                 textStyle: AppStyles.regular20RobotoBlack,
                 backgroundColor: AppColor.orange,
               ),

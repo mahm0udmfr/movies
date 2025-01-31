@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies/hometab/cubit/home_tab_state.dart';
-import 'package:movies/hometab/cubit/home_tab_view_model.dart';
-import 'package:movies/hometab/home_tab_widget.dart';
+import 'package:movies/tabs/hometab/cubit/home_tab_state.dart';
+import 'package:movies/tabs/hometab/cubit/home_tab_view_model.dart';
+import 'package:movies/tabs/hometab/home_tab_widget.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
