@@ -5,6 +5,16 @@ class SearchTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container();
   }
+// return Scaffold(
+//   appBar: AppBar(
+//     actions: [
+//       IconButton(onPressed: (){
+//         showSearch(context: context, delegate: )
+//       }, icon: Image.asset(ImageAssets.searchIcon))
+//     ],
+//   ),
+// );
+// }
 }
