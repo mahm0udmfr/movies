@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
+import 'package:movies/model/login_model.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
 
@@ -20,29 +21,38 @@ class ApiManager {
     }
   }
 
-// https://newsapi.org/v2/everything?q=bitcoin&apiKey=84c34fd58ebe4efb98b64134a005e514
+  static Future<HomeTabModel?> getMoviesByCategoryName(String catName) async {
+    Uri url = Uri.https(
+        ApiConstant.moviesBaseUrl, EndPoints.listMovies, {'genre': catName});
+    try {
+      var response = await http.get(url);
+      return HomeTabModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      // ignore: use_rethrow_when_possible
+      return null;
+    }
+  }
 
-  // static Future<NewsModel?> getNewsBySourceId(String sourceId) async {
-  //   Uri url = Uri.https(ApiConstant.baseUrl, EndPoints.newsApi,
-  //       {'apiKey': ApiConstant.apiKey, 'sources': sourceId});
-  //   try {
-  //     var response = await http.get(url);
-  //     return NewsModel.fromJson(jsonDecode(response.body));
-  //   } catch (e) {
-  //     // ignore: use_rethrow_when_possible
-  //     throw e;
-  //   }
-  // }
+  static Future<LoginModel?> loginByEmailAndPassword(
+    String userEmail,
+    String userPassword,
+  ) async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.login);
 
-  // static Future<NewsModel?> getNewsBySearch(String? searchText) async {
-  //   Uri url = Uri.https(ApiConstant.baseUrl, EndPoints.newsApi,
-  //       {'apiKey': ApiConstant.apiKey, 'q': searchText});
-  //   try {
-  //     var response = await http.get(url);
-  //     return NewsModel.fromJson(jsonDecode(response.body));
-  //   } catch (e) {
-  //     // ignore: use_rethrow_when_possible
-  //     throw e;
-  //   }
-  // }
+    Map<String, dynamic> requestBody = {
+      "email": userEmail,
+      "password": userPassword,
+    };
+
+    try {
+      var response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(requestBody),
+      );
+      return LoginModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
 }
