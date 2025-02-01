@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies/tabs/browse_screen/browse_screen.dart';
-import 'package:movies/tabs/hometab/home_tab_top_item_ui.dart';
-import 'package:movies/tabs/profileTab/profileTab.dart';
-import 'package:movies/tabs/searchTab/searchTab.dart';
+import 'package:movies/tabs/hometab/home_tab.dart';
+import 'package:movies/tabs/profileTab/profile_tab.dart';
+import 'package:movies/tabs/searchTab/search_tab.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
 
@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   List<Widget> tabs = [
-    MoviesTabTopItem(),
+    MoviesTab(),
     SearchTab(),
     BrowseScreen(),
     ProfileTab()
@@ -28,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: IndexedStack(
         index: selectedIndex,
         children: tabs,

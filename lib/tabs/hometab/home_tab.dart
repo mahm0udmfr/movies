@@ -1,22 +1,21 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/tabs/hometab/cubit/home_tab_state.dart';
 import 'package:movies/tabs/hometab/cubit/home_tab_view_model.dart';
+import 'package:movies/tabs/hometab/home_tab_list_by_category.dart';
 import 'package:movies/tabs/hometab/home_tab_widget.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
-import 'package:movies/utils/imageassets.dart';
 
-class MoviesTabTopItem extends StatefulWidget {
+class MoviesTab extends StatefulWidget {
   static const String routename = 'MoviesTab';
-  const MoviesTabTopItem({super.key});
+  const MoviesTab({super.key});
 
   @override
-  State<MoviesTabTopItem> createState() => _MoviesTabState();
+  State<MoviesTab> createState() => _MoviesTabState();
 }
 
-class _MoviesTabState extends State<MoviesTabTopItem> {
+class _MoviesTabState extends State<MoviesTab> {
   HomeTabViewModel viewModel = HomeTabViewModel();
   @override
   void initState() {
@@ -26,7 +25,7 @@ class _MoviesTabState extends State<MoviesTabTopItem> {
 
   @override
   Widget build(BuildContext context) {
-    // Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size;
     return SafeArea(
       child: BlocBuilder<HomeTabViewModel, HomeTabState>(
         bloc: viewModel,
@@ -54,27 +53,20 @@ class _MoviesTabState extends State<MoviesTabTopItem> {
               ),
             );
           } else if (state is AvailableNowSuccessState) {
-            return Stack(children: [
-              Opacity(
-                opacity: 0.5,
-                child: CachedNetworkImage(
-                  imageUrl: state.availableNowList[0].mediumCoverImage,
-                  fit: BoxFit.fill,
-                  height: double.infinity,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
-              Column(
+            return SingleChildScrollView(
+              child: Column(
                 children: [
-                  Image.asset(ImageAssets.availableNow),
-                  HomeTabWidget(availableNowList: state.availableNowList),
-                  Image.asset(ImageAssets.watchNow),
+                  SizedBox(
+                      height: screenSize.height * 0.7,
+                      child: HomeTabWidget(
+                          availableNowList: state.availableNowList)),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: HomeTabListByCategory(),
+                  ),
                 ],
               ),
-            ]);
+            );
           } else {
             return SizedBox();
           }

@@ -23,7 +23,29 @@ class HomeTabViewModel extends Cubit<HomeTabState> {
     }
   }
 
-  void changeImageIndex() {
+void getMoviesByCategoryName(String categoryName) async {
+    try {
+      emit(AvailableNowLoadingState());
+      var response = await ApiManager.getMoviesByCategoryName(categoryName);
+      if (response!.status == 'error') {
+        emit(AvailableNowErrorState(errorMessage: response.statusMessage));
+        return;
+      }
+
+      if (response.status == 'ok') {
+        emit(AvailableNowSuccessState(availableNowList: response.data.movies));
+        return;
+      }
+      
+    } catch (e) {
+      emit(AvailableNowErrorState(errorMessage: e.toString()));
+    }
+  }
+
+
+
+  void changeImageIndex(int index) {
+
     emit(ScrollImageChange(selectedIndex: newSelectedIndex));
   }
 }

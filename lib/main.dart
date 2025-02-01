@@ -8,7 +8,7 @@ import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
-import 'package:movies/tabs/hometab/home_tab_top_item_ui.dart';
+import 'package:movies/tabs/hometab/home_tab.dart';
 import 'package:movies/utils/apptheme.dart';
 
 import 'Auth/Login/loginscreen.dart';
@@ -44,13 +44,12 @@ class MyApp extends StatelessWidget {
               LoginScreen.routeName: (context) => LoginScreen(),
               RegisterScreen.routeName: (context) => RegisterScreen(),
               ForgetPassword.routename: (context) => ForgetPassword(),
-              MoviesTabTopItem.routename: (context) => MoviesTabTopItem(),
+              MoviesTab.routename: (context) => MoviesTab(),
             },
-              initialRoute: HomeScreen.routename
-              // MyServices.getString("step") == "1"
-              //     ? LoginScreen.routeName
-              //     : OnBoarding.routename,
-              );
+            initialRoute: MyServices.getString("step") == "1"
+                ? LoginScreen.routeName
+                : OnBoarding.routename,
+          );
         },
       ),
     );
