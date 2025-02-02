@@ -4,6 +4,7 @@ import 'package:movies/utils/colors.dart';
 
 class Apptheme {
   static final ThemeData darkTheme = ThemeData(
+dialogTheme: DialogTheme(backgroundColor: AppColor.black),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColor.grey,
         showUnselectedLabels: false,
