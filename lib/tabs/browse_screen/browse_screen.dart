@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:movies/browse_screen/moviesList.dart';
-import 'package:movies/browse_screen/movies_category_widget.dart';
+import 'package:movies/tabs/browse_screen/movies_list.dart';
+import 'package:movies/tabs/browse_screen/movies_category_widget.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 
 class BrowseScreen extends StatefulWidget {
+  const BrowseScreen({super.key});
+
 
   @override
   State<BrowseScreen> createState() => _BrowseScreenState();
@@ -31,7 +33,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
           SizedBox(
             height: screenSize.height * .05,
           ),
-          Container(
+          SizedBox(
             height: screenSize.height * .06,
             width: double.infinity,
             child: ListView.builder(

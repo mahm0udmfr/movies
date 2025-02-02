@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../utils/app_styles.dart';
-import '../utils/colors.dart';
-import '../utils/imageassets.dart';
+import '../../utils/app_styles.dart';
+import '../../utils/colors.dart';
+import '../../utils/imageassets.dart';
 
 class Movieslist extends StatelessWidget {
+  const Movieslist({super.key});
+
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
