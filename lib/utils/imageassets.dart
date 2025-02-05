@@ -37,5 +37,7 @@ class ImageAssets {
   static const String browseIcon = "assets/images/exploreIcon.png";
   static const String folderIcon = "assets/images/folder_icon.png";
   static const String drawerIcon = "assets/images/drawer_icon.png";
+  static const String exitIcon = "assets/images/exit_icon.png";
+  static const String popcornImage = "assets/images/popcorn.png";
 
 }
