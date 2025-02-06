@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:movies/tabs/browse_screen/moviesList.dart';
 import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_text_form_field.dart';
+
+import '../browse_screen/movies_list.dart';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({super.key});

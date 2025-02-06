@@ -6,6 +6,8 @@ import 'package:movies/model/login_model.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
 
+import '../model/register_model.dart';
+
 class ApiManager {
   static Future<HomeTabModel?> getMovies() async {
     Uri url = Uri.https(
@@ -55,4 +57,78 @@ class ApiManager {
       return null;
     }
   }
+
+  static Future<RegisterModel?> register({
+    required String userName,
+    required String userEmail,
+    required String userPassword,
+    required String confirmPassword,
+    required String phone,
+    required int avaterId,
+  }) async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.register);
+
+    Map<String, dynamic> requestBody = {
+      "name": userName,
+      "email": userEmail,
+      "password": userPassword,
+      "confirmPassword": confirmPassword,
+      "phone": phone,
+      "avaterId": avaterId,
+    };
+
+    try {
+      var response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(requestBody),
+      );
+      return RegisterModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+//   static Future<RegisterResponse?> register({
+//     required String userName,
+//     required String userEmail,
+//     required String userPassword,
+//     required String confirmPassword,
+//     required String phone,
+//     required int avaterId,
+//   }) async {
+//     try {
+//       Response response = await http.post(
+
+//           Uri.parse(
+//             ApiConstant.userBaseUrl,
+//             EndPoints.register,
+//           ),
+//           headers: {'Content-Type': 'application/json'},
+//           body: jsonEncode(
+//             {
+//               "name": userName,
+//               "email": userEmail,
+//               "password": userPassword,
+//               "confirmPassword": confirmPassword,
+//               "phone": phone,
+//               "avaterId": avaterId,
+//             },
+//           ));
+//       if (response.statusCode >= 200 && response.statusCode < 300) {
+//         var responseBody = jsonDecode(response.body);
+//         return RegisterResponse.fromJson(responseBody);
+//       } else {
+//         var errorResponse = jsonDecode(response.body);
+//         return RegisterResponse.fromJson({
+//           "success": false,
+//           "message": errorResponse['message'] ?? "Registration failed",
+//           "statusCode": response.statusCode,
+//         });
+//       }
+//     } catch (e) {
+//       print(e.toString());
+//       return null;
+//     }
+//   }
 }
