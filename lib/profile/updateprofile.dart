@@ -71,7 +71,7 @@ class Updateprofile extends StatelessWidget {
                   height: screenSize.height * 0.02,
                 ),
                 CustomElevatedButton(
-                  text: "Delete Account",
+                  text: "Update Data",
                   center: true,
                   onPressed: () {},
                 ),
