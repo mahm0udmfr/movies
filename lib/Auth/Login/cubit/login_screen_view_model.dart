@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/Auth/Login/cubit/login_interface.dart';
 import 'package:movies/Auth/Login/cubit/login_screen_state.dart';
+import 'package:movies/services.dart';
 import 'package:movies/utils/api_manager.dart';
 
 class LoginScreenViewModel extends Cubit<LoginState> {
   LoginScreenViewModel() : super(LoginInitial());
 
   late LoginInterface navigator;
-  var userEmailController = TextEditingController();
-  var passwordController = TextEditingController();
+  var userEmailController =
+      TextEditingController(text: "look.mahmoud172@gmail.com");
+  var passwordController = TextEditingController(text: "Mahmoud172@");
   var formKey = GlobalKey<FormState>();
 
   void login() async {
@@ -26,6 +28,7 @@ class LoginScreenViewModel extends Cubit<LoginState> {
 
       if (response!.message! == "Success Login") {
         emit(LoginSuccess());
+        MyServices.setString("Token", response.data!);
         navigator.hideLoading();
         navigator.navigateToScreen();
       } else {
