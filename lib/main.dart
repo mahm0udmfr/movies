@@ -46,12 +46,11 @@ class MyApp extends StatelessWidget {
               RegisterScreen.routeName: (context) => RegisterScreen(),
               ForgetPassword.routename: (context) => ForgetPassword(),
               MoviesTab.routename: (context) => MoviesTab(),
-                ProfileTab.routename: (context) => ProfileTab()
               },
-              initialRoute: ProfileTab.routename
-              //MyServices.getString("step") == "1"
-              //     ? LoginScreen.routeName
-              //     : OnBoarding.routename,
+              initialRoute: 
+              MyServices.getString("step") == "1"
+                  ? LoginScreen.routeName
+                  : OnBoarding.routename,
               );
         },
       ),
