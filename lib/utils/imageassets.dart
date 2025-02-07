@@ -35,4 +35,6 @@ class ImageAssets {
   static const String searchIcon = "assets/images/searchIcon.png";
   static const String profileIcon = "assets/images/profielIcon.png";
   static const String browseIcon = "assets/images/exploreIcon.png";
+  static const String watchListIcon = "assets/images/watchlisticon.png";
+  static const String historyIcon = "assets/images/historyicon.png";
 }
