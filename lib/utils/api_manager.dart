@@ -6,6 +6,8 @@ import 'package:movies/model/login_model.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
 
+import '../model/register_model.dart';
+
 class ApiManager {
   static Future<HomeTabModel?> getMovies() async {
     Uri url = Uri.https(
@@ -55,4 +57,38 @@ class ApiManager {
       return null;
     }
   }
+
+
+  static Future<RegisterModel?> register({
+    required String userName,
+    required String userEmail,
+    required String userPassword,
+    required String confirmPassword,
+    required String phone,
+    required int avaterId,
+  }) async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.register);
+
+    Map<String, dynamic> requestBody = {
+      "name": userName,
+      "email": userEmail,
+      "password": userPassword,
+      "confirmPassword": confirmPassword,
+      "phone": phone,
+      "avaterId": avaterId,
+    };
+
+    try {
+      var response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(requestBody),
+      );
+      return RegisterModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+
 }
