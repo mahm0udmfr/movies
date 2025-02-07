@@ -178,7 +178,6 @@ class _RegisterScreenState extends State<RegisterScreen>
                         hintStyle: AppStyles.regular16RobotoWhite,
                         prefixIcon: Image.asset(ImageAssets.phoneIcon),
                         controller: viewModel.phoneController,
-                        // controller: viewModel.n,
                         validator: (text) {
                           if (viewModel.phoneController.text.isEmpty) {
                             return "Please Enter Phone Number";
