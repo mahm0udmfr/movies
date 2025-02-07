@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
+import 'package:movies/model/update_profile_model.dart';
 import 'package:movies/model/user_model.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
@@ -104,6 +105,51 @@ class ApiManager {
         },
       );
       return UserModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UpdateProfileModel?> updateUserNameAndPhone({
+    required String userName,
+    required String phone,
+    required int avaterId,
+  }) async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
+
+    Map<String, dynamic> requestBody = {
+      "name": userName,
+      "phone": phone,
+      "avaterId": avaterId,
+    };
+
+    try {
+      var response = await http.patch(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": "Bearer ${MyServices.getString("Token")}"
+        },
+        body: jsonEncode(requestBody),
+      );
+      return UpdateProfileModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UpdateProfileModel?> deleteProfile() async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
+
+    try {
+      var response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": "Bearer ${MyServices.getString("Token")}"
+        },
+      );
+      return UpdateProfileModel.fromJson(jsonDecode(response.body));
     } catch (e) {
       return null;
     }

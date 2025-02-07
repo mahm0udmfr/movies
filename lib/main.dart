@@ -9,7 +9,6 @@ import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
 import 'package:movies/tabs/hometab/home_tab.dart';
-import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/utils/apptheme.dart';
 
 import 'Auth/Login/loginscreen.dart';
