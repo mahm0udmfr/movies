@@ -58,6 +58,7 @@ class ApiManager {
     }
   }
 
+
   static Future<RegisterModel?> register({
     required String userName,
     required String userEmail,
@@ -89,46 +90,5 @@ class ApiManager {
     }
   }
 
-//   static Future<RegisterResponse?> register({
-//     required String userName,
-//     required String userEmail,
-//     required String userPassword,
-//     required String confirmPassword,
-//     required String phone,
-//     required int avaterId,
-//   }) async {
-//     try {
-//       Response response = await http.post(
 
-//           Uri.parse(
-//             ApiConstant.userBaseUrl,
-//             EndPoints.register,
-//           ),
-//           headers: {'Content-Type': 'application/json'},
-//           body: jsonEncode(
-//             {
-//               "name": userName,
-//               "email": userEmail,
-//               "password": userPassword,
-//               "confirmPassword": confirmPassword,
-//               "phone": phone,
-//               "avaterId": avaterId,
-//             },
-//           ));
-//       if (response.statusCode >= 200 && response.statusCode < 300) {
-//         var responseBody = jsonDecode(response.body);
-//         return RegisterResponse.fromJson(responseBody);
-//       } else {
-//         var errorResponse = jsonDecode(response.body);
-//         return RegisterResponse.fromJson({
-//           "success": false,
-//           "message": errorResponse['message'] ?? "Registration failed",
-//           "statusCode": response.statusCode,
-//         });
-//       }
-//     } catch (e) {
-//       print(e.toString());
-//       return null;
-//     }
-//   }
 }

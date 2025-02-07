@@ -1,3 +1,4 @@
+
 class RegisterModel {
   String? message;
   Data? data;
@@ -97,3 +98,5 @@ class Data {
     return _data;
   }
 }
+
+
