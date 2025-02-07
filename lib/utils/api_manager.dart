@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
+import 'package:movies/model/reset_password_model.dart';
+import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
 
@@ -90,5 +92,25 @@ class ApiManager {
     }
   }
 
+  static Future<ResetPasswordModel?> resetPassword({
+    required String oldPass,
+    required String newPass,
+  }) async {
+    try {
+      String? token =
+          MyServices.getString("Token"); //get oken from shared prefrences
+      if (token == null) {
+        return Future.error("token doesn't found");
+      }
+      Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.resetPassword);
 
+      var response = await http.patch(url,
+          headers: {"AUTHORIZATION": "Bearer $token"},
+          body: {"oldPassword": oldPass, "newPassword": newPass});
+
+      return ResetPasswordModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      throw e;
+    }
+  }
 }

@@ -6,6 +6,8 @@ import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
 import 'package:movies/widget/custom_text_form_field.dart';
 
+import '../Auth/reset_password/reset_password_view.dart';
+
 class Updateprofile extends StatelessWidget {
   static const String routename = "Updateprofile";
   const Updateprofile({super.key});
@@ -52,7 +54,9 @@ class Updateprofile extends StatelessWidget {
               height: screenSize.height * 0.03,
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ResetPassword.routeName);
+                },
                 child: Text(
                   "Reset Password",
                   style: AppStyles.regular20RobotoWhite,
