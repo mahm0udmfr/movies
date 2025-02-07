@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
+import 'package:movies/model/user_model.dart';
+import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
 
@@ -58,7 +60,6 @@ class ApiManager {
     }
   }
 
-
   static Future<RegisterModel?> register({
     required String userName,
     required String userEmail,
@@ -90,5 +91,21 @@ class ApiManager {
     }
   }
 
-
+  static Future<UserModel?> getUserData() async {
+    Uri url = Uri.https(
+      ApiConstant.userBaseUrl,
+      EndPoints.profile,
+    );
+    try {
+      var response = await http.get(
+        url,
+        headers: {
+          "Authorization": "Bearer ${MyServices.getString("Token")}",
+        },
+      );
+      return UserModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
 }

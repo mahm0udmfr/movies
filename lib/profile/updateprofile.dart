@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/profile/cubit/update_profile_view_model.dart';
 import 'package:movies/profile/update_profile_bottom_sheet.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
@@ -6,9 +7,22 @@ import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
 import 'package:movies/widget/custom_text_form_field.dart';
 
-class Updateprofile extends StatelessWidget {
-  static const String routename = "Updateprofile";
+class Updateprofile extends StatefulWidget {
+  static const String routename = "updateProfile";
+
   const Updateprofile({super.key});
+
+  @override
+  State<Updateprofile> createState() => _UpdateprofileState();
+}
+
+class _UpdateprofileState extends State<Updateprofile> {
+  UpdateProfileViewModel viewModel = UpdateProfileViewModel();
+  @override
+  void initState() {
+    viewModel.getUserDetails();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +45,7 @@ class Updateprofile extends StatelessWidget {
                   showNewsBottomShhet(context);
                 },
                 child: ClipRRect(
-                  child: Image.asset(ImageAssets.avatar1),
+                  child: Image.asset(viewModel.currentAvatar),
                 ),
               ),
             ),
@@ -39,6 +53,7 @@ class Updateprofile extends StatelessWidget {
               height: screenSize.height * 0.02,
             ),
             CustomTextFormField(
+              controller: viewModel.userName,
               hintText: "UserName",
               prefixIcon: Image.asset(ImageAssets.userIcon),
             ),
@@ -46,6 +61,7 @@ class Updateprofile extends StatelessWidget {
               height: screenSize.height * 0.02,
             ),
             CustomTextFormField(
+              controller: viewModel.phoneNumber,
                 hintText: "Phone",
                 prefixIcon: Image.asset(ImageAssets.phoneIcon)),
             SizedBox(
@@ -78,7 +94,7 @@ class Updateprofile extends StatelessWidget {
               ],
             ),
           ],
-        ), 
+        ),
       ),
     );
   }
