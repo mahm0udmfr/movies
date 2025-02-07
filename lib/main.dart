@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/Auth/forget_password/forget_password.dart';
+import 'package:movies/Auth/reset_password/reset_password_view.dart';
 import 'package:movies/cubit/language_cubit.dart';
 import 'package:movies/cubit/language_state.dart';
 import 'package:movies/home_screen.dart';
@@ -45,11 +46,13 @@ class MyApp extends StatelessWidget {
               RegisterScreen.routeName: (context) => RegisterScreen(),
               ForgetPassword.routename: (context) => ForgetPassword(),
               MoviesTab.routename: (context) => MoviesTab(),
-            },
-            initialRoute: MyServices.getString("step") == "1"
-                ? LoginScreen.routeName
-                : OnBoarding.routename,
-          );
+                ResetPassword.routeName: (context) => ResetPassword(),
+              },
+              initialRoute: LoginScreen.routeName
+              // MyServices.getString("step") == "1"
+              //     ? LoginScreen.routeName
+              //     : OnBoarding.routename,
+              );
         },
       ),
     );

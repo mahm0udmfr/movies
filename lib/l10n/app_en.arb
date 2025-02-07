@@ -36,6 +36,7 @@
   "history": "History",
   "watch_list": "Watch List",
   "edit_profile": "Edit Profile",
-  "exit": "Exit"
-
+  "exit": "Exit",
+  "new_password": "New Password",
+  "password_updated_successfully": "Password updated successfully"
 }
