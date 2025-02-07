@@ -17,7 +17,7 @@ class ImageAssets {
   static const String emailIcon = "assets/images/emailIcon.png";
   static const String nameIcon = "assets/images/nameIcon.png";
   static const String passIcon = "assets/images/passIcon.png";
-  static const String phoneIcon = "assets/images/phoneicon.png";
+  static const String phoneIcon = "assets/images/phoneIcon.png";
   static const String hidePassIcon = "assets/images/hidePassIcon.png";
   static const String logo = "assets/images/Logo.png";
   static const String iconEmail = "assets/images/Icon_Email.png";

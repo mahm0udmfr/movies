@@ -20,7 +20,7 @@ import 'cubit/register_screen_view_model.dart';
 class RegisterScreen extends StatefulWidget {
   static const String routeName = "RegisterScreen";
 
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -32,7 +32,6 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     viewModel = RegisterScreenViewModel();
     viewModel.navigator = this;
@@ -277,6 +276,7 @@ class _RegisterScreenState extends State<RegisterScreen>
     );
   }
 
+  @override
   void hideLoading() {
     DialogUtils.hideLoading(context);
   }

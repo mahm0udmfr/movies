@@ -9,24 +9,25 @@ class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
 
   @override
-  _SearchTabState createState() => _SearchTabState();
+  SearchTabState createState() => SearchTabState();
 }
 
-class _SearchTabState extends State<SearchTab> {
-  final TextEditingController _searchController = TextEditingController();
+class SearchTabState extends State<SearchTab> {
+  final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    // var width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Column(
         children: [
+                  SizedBox(
+          height: height * .05,
+        ),
           CustomTextFormField(
               prefixIcon: Image.asset(ImageAssets.searchIcon),
               hintText: AppLocalizations.of(context)!.search),
-          SizedBox(
-            height: height * 0.01,
-          ),
+
           Expanded(
               child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
