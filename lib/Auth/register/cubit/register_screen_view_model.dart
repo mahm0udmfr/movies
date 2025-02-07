@@ -9,17 +9,16 @@ class RegisterScreenViewModel extends Cubit<RegisterState> {
 
   late RegisterInterface navigator;
 
-  var userNameController = TextEditingController(text: "mahmoud");
+  var userNameController = TextEditingController();
   var userEmailController =
-      TextEditingController(text: "look.mahmoud172@gmail.com");
-  var passwordController = TextEditingController(text: "Mahmoud172@");
-  var confirmPasswordController = TextEditingController(text: "Mahmoud172@");
-  var phoneController = TextEditingController(text: "+201032775681");
+      TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+  var phoneController = TextEditingController();
   int selectedAvatarId = 1;
 
   void selectAvatar(int id) {
     selectedAvatarId = id;
-    print("Selected Avatar ID: $selectedAvatarId");
   }
 
   var formKey = GlobalKey<FormState>();

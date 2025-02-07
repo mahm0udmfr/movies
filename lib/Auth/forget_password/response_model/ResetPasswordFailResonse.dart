@@ -1,6 +1,3 @@
-/// statusCode : 400
-/// message : "Old password does not match"
-
 class ResetPasswordFailResonse {
   ResetPasswordFailResonse({
     this.statusCode,
