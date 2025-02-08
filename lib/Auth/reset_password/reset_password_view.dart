@@ -71,6 +71,8 @@ class _ResetPasswordState extends State<ResetPassword>
                         },
                         controller:
                             resetPasswordViewModel.oldPasswordController,
+                            obscureText: true,
+                            maxLines: 1,
                         style: AppStyles.regular16RobotoWhite,
                         hintText: AppLocalizations.of(context)!.password,
                         prefixIcon: Image.asset(ImageAssets.passIcon),
@@ -95,6 +97,8 @@ class _ResetPasswordState extends State<ResetPassword>
                         },
                         controller:
                             resetPasswordViewModel.newPasswordController,
+                              obscureText: true,
+                              maxLines: 1,
                         style: AppStyles.regular16RobotoWhite,
                         hintText: AppLocalizations.of(context)!.new_password,
                         prefixIcon: Image.asset(ImageAssets.passIcon),

@@ -94,7 +94,6 @@ class ApiManager {
     }
   }
 
-
   static Future<UserModel?> getUserData() async {
     Uri url = Uri.https(
       ApiConstant.userBaseUrl,
@@ -155,6 +154,8 @@ class ApiManager {
       return UpdateProfileModel.fromJson(jsonDecode(response.body));
     } catch (e) {
       return null;
+    }
+  }
 
   static Future<ResetPasswordModel?> resetPassword({
     required String oldPass,
@@ -174,8 +175,7 @@ class ApiManager {
 
       return ResetPasswordModel.fromJson(jsonDecode(response.body));
     } catch (e) {
-      throw e;
-
+      rethrow ;
     }
   }
 }
