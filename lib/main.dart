@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
               RegisterScreen.routeName: (context) => RegisterScreen(),
               ForgetPassword.routename: (context) => ForgetPassword(),
               MoviesTab.routename: (context) => MoviesTab(),
+              ResetPassword.routeName: (context) => ResetPassword(),
               },
               initialRoute: MyServices.getString("step") == "1"
 

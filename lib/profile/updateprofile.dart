@@ -13,15 +13,8 @@ import 'package:movies/widget/custom_elevated_button.dart';
 import 'package:movies/widget/custom_text_form_field.dart';
 import '../Auth/reset_password/reset_password_view.dart';
 
-
 class Updateprofile extends StatefulWidget {
-  static const String routename = "updateProfile";
-
-
-
-class Updateprofile extends StatelessWidget {
   static const String routename = "Updateprofile";
-
   const Updateprofile({super.key});
 
   @override
@@ -30,38 +23,38 @@ class Updateprofile extends StatelessWidget {
 
 class _UpdateprofileState extends State<Updateprofile>
     implements UpdateProfileInterface {
-  UpdateProfileViewModel viewModel = UpdateProfileViewModel();
+  final UpdateProfileViewModel viewModel = UpdateProfileViewModel();
+
   @override
   void initState() {
+    super.initState();
     viewModel.getUserDetails();
     viewModel.navigator = this;
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text("Pick Avatar"),
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(title: const Text("Pick Avatar")),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: screenSize.width * 0.03,
+          vertical: screenSize.height * 0.01,
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: screenSize.width * 0.03,
-              vertical: screenSize.height * 0.01),
-          child: BlocProvider(
-            create: (context) => viewModel,
-            child: BlocConsumer<UpdateProfileViewModel, UpdateProfileState>(
-                listener: (context, state) {
+        child: BlocProvider(
+          create: (context) => viewModel,
+          child: BlocConsumer<UpdateProfileViewModel, UpdateProfileState>(
+            listener: (context, state) {
               if (state is UpdateProfileSuccessState) {
                 showMessage("Profile Updated Successfully");
                 navigateToScreen();
               } else if (state is UpdateProfileErrorState) {
                 showMessage(state.message);
               }
-            }, builder: (context, state) {
+            },
+            builder: (context, state) {
               return Form(
                 key: viewModel.formKey,
                 child: Column(
@@ -69,130 +62,91 @@ class _UpdateprofileState extends State<Updateprofile>
                   children: [
                     Center(
                       child: InkWell(
-                        onTap: () {
-                          showNewsBottomShhet(context);
-                        },
+                        onTap: () => showNewsBottomSheet(context),
                         child: ClipRRect(
-                          child: Image.asset(viewModel.currentAvatar),
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(viewModel.currentAvatar, height: 100, width: 100),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: screenSize.height * 0.02,
-                    ),
+                    SizedBox(height: screenSize.height * 0.02),
                     CustomTextFormField(
                       controller: viewModel.userName,
-                      validator: (text) {
-                        if (viewModel.userName.text.isEmpty) {
-                          return "Please Enter a name";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (text) => text!.isEmpty ? "Please Enter a name" : null,
                       hintText: "UserName",
                       prefixIcon: Image.asset(ImageAssets.userIcon),
                     ),
-                    SizedBox(
-                      height: screenSize.height * 0.02,
-                    ),
+                    SizedBox(height: screenSize.height * 0.02),
                     CustomTextFormField(
-                        controller: viewModel.phoneNumber,
-                        validator: (text) {
-                          if (viewModel.phoneNumber.text.isEmpty) {
-                            return "Please Enter Phone Number";
-                          } else {
-                            return null;
-                          }
-                        },
-                        hintText: "Phone",
-                        prefixIcon: Image.asset(ImageAssets.phoneIcon)),
-                    SizedBox(
-                      height: screenSize.height * 0.03,
+                      controller: viewModel.phoneNumber,
+                      validator: (text) => text!.isEmpty ? "Please Enter Phone Number" : null,
+                      hintText: "Phone",
+                      prefixIcon: Image.asset(ImageAssets.phoneIcon),
                     ),
+                    SizedBox(height: screenSize.height * 0.03),
                     TextButton(
-                        onPressed: () {
-                        Navigator.of(context).pushNamed(ResetPassword.routeName);
-                        },
-                        child: Text(
-                          "Reset Password",
-                          style: AppStyles.regular20RobotoWhite,
-                        )),
-                    Spacer(),
+                      onPressed: () => Navigator.of(context).pushNamed(ResetPassword.routeName),
+                      child: Text("Reset Password", style: AppStyles.regular20RobotoWhite),
+                    ),
+                    const Spacer(),
                     Column(
                       children: [
                         CustomElevatedButton(
                           text: "Delete Account",
                           center: true,
-                          onPressed: () {
-                            showMessageYesNo("Are You Sure!!");
-                          },
+                          onPressed: () => showMessageYesNo("Are You Sure!!"),
                           backgroundColor: AppColor.red,
                           textStyle: AppStyles.regular20RobotoWhite,
                         ),
-                        SizedBox(
-                          height: screenSize.height * 0.02,
-                        ),
+                        SizedBox(height: screenSize.height * 0.02),
                         CustomElevatedButton(
                           text: "Update Data",
                           center: true,
-                          onPressed: () {
-                            viewModel.updateProfile();
-                          },
+                          onPressed: viewModel.updateProfile,
                         ),
                       ],
                     ),
                   ],
                 ),
               );
-            }),
+            },
           ),
-        ));
+        ),
+      ),
+    );
   }
 
-  void showNewsBottomShhet(BuildContext context) {
+  void showNewsBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (context) => UpdateProfileBottomSheet(),
+      builder: (context) =>  UpdateProfileBottomSheet(),
     );
   }
 
   @override
-  void hideLoading() {
-    DialogUtils.hideLoading(context);
-  }
+  void hideLoading() => DialogUtils.hideLoading(context);
 
   @override
-  void navigateToScreen() {
-    Navigator.pop(context);
-  }
+  void navigateToScreen() => Navigator.pop(context);
 
   @override
-  void showLoading(String message) {
-    DialogUtils.showLoading(context: context, message: message);
-  }
+  void showLoading(String message) => DialogUtils.showLoading(context: context, message: message);
 
   @override
-  void showMessage(String message) {
-    DialogUtils.showMessage(context: context, message: message);
-  }
+  void showMessage(String message) => DialogUtils.showMessage(context: context, message: message);
 
   @override
   void showMessageYesNo(String message) {
     DialogUtils.showMessage(
-        context: context,
-        message: message,
-        negAction: () {
-          Navigator.pop(context);
-        },
-        negActionName: "No",
-        posActionName: "Yes",
-        posAction: () {
-          viewModel.deleteProfile();
-        });
+      context: context,
+      message: message,
+      negAction: () => Navigator.pop(context),
+      negActionName: "No",
+      posActionName: "Yes",
+      posAction: viewModel.deleteProfile,
+    );
   }
 
   @override
-  void exitApp() {
-    exit(0);
-  }
+  void exitApp() => exit(0);
 }

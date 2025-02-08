@@ -1,7 +1,3 @@
-/// message : "Token is missing" / "Invalid or expired token"
-/// error : "Unauthorized"
-/// statusCode : 401
-
 class ResetPasswordModel {
   ResetPasswordModel({
     this.message,
