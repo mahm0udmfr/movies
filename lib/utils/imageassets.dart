@@ -37,4 +37,12 @@ class ImageAssets {
   static const String browseIcon = "assets/images/exploreIcon.png";
   static const String watchListIcon = "assets/images/watchlisticon.png";
   static const String historyIcon = "assets/images/historyicon.png";
+  static const String moviePlay = "assets/images/Group 21.png";
+  static const String saveMovie = "assets/images/Vector.png";
+  static const String arrowBack = "assets/images/arrow_back.png";
+  static const String yellowFavorite = "assets/images/yellow_favorite.png";
+  static const String movieTime = "assets/images/movie_time.png";
+  static const String movieRate = "assets/images/movie_rate.png";
+  static const String screenShot = "assets/images/large-screenshot1.png";
+  static const String castImage = "assets/images/cast_image.png";
 }
