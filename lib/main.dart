@@ -10,7 +10,9 @@ import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
 import 'package:movies/tabs/hometab/home_tab.dart';
-import 'package:movies/utils/apptheme.dart';
+import 'package:movies/tabs/movie_details/movie_details.dart';
+import 'package:movies/tabs/profileTab/profile_tab.dart';
+
 
 import 'Auth/Login/loginscreen.dart';
 import 'Auth/register/register_screen.dart';
@@ -46,7 +48,9 @@ class MyApp extends StatelessWidget {
               RegisterScreen.routeName: (context) => RegisterScreen(),
               ForgetPassword.routename: (context) => ForgetPassword(),
               MoviesTab.routename: (context) => MoviesTab(),
-              ResetPassword.routeName: (context) => ResetPassword(),
+                ResetPassword.routeName: (context) => ResetPassword(),
+                ProfileTab.routename: (context) => ProfileTab(),
+                MovieDetails.routeName: (context) => MovieDetails(),
               },
               initialRoute: MyServices.getString("step") == "1"
 
