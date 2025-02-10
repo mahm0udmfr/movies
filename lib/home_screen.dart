@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/tabs/browse_screen/browse_screen.dart';
 import 'package:movies/tabs/hometab/home_tab.dart';
+import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/tabs/searchTab/search_tab.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     MoviesTab(),
     SearchTab(),
     BrowseScreen(),
-    Updateprofile()
+    ProfileTab()
   ];
 
   @override
