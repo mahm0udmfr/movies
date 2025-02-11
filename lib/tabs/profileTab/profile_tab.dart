@@ -13,6 +13,7 @@ import 'package:movies/widget/custom_elevated_button.dart';
 import '../browse_screen/movies_list.dart';
 
 class ProfileTab extends StatefulWidget {
+   static const String routename = "profileTab";
   const ProfileTab({super.key});
 
   @override

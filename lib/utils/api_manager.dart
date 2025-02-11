@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
+import 'package:movies/model/movie_details_model.dart';
 import 'package:movies/model/update_profile_model.dart';
 import 'package:movies/model/user_model.dart';
 import 'package:movies/model/reset_password_model.dart';
@@ -24,6 +25,21 @@ class ApiManager {
       return HomeTabModel.fromJson(jsonDecode(response.body));
     } catch (e) {
       // ignore: use_rethrow_when_possible
+      return null;
+    }
+  }
+
+  static Future<MovieDetailsModel?> getMovieDetail({required String movieId}) async {
+    Uri url = Uri.https(
+      ApiConstant.moviesBaseUrl,
+      EndPoints.moviedetails,
+      {'movie_id': movieId, 'with_images': 'true', 'with_cast': 'true'},
+    );
+
+    try {
+      var response = await http.get(url);
+      return MovieDetailsModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
       return null;
     }
   }
@@ -175,7 +191,7 @@ class ApiManager {
 
       return ResetPasswordModel.fromJson(jsonDecode(response.body));
     } catch (e) {
-      rethrow ;
+      rethrow;
     }
   }
 }

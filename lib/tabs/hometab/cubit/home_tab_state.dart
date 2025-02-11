@@ -10,7 +10,7 @@ class AvailableNowErrorState extends HomeTabState {
 }
 
 class AvailableNowSuccessState extends HomeTabState {
-  List<Movie> availableNowList;
+  List<Movies> availableNowList;
 
   AvailableNowSuccessState({required this.availableNowList});
 }

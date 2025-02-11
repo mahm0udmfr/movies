@@ -1,235 +1,312 @@
+
 class HomeTabModel {
-  final String status;
-  final String statusMessage;
-  final MoviesData data;
+  String? status;
+  String? statusMessage;
+  Data? data;
 
-  HomeTabModel({
-    required this.status,
-    required this.statusMessage,
-    required this.data,
-  });
+  HomeTabModel({this.status, this.statusMessage, this.data});
 
-  factory HomeTabModel.fromJson(Map<String, dynamic> json) => HomeTabModel(
-        status: json["status"],
-        statusMessage: json["status_message"],
-        data: MoviesData.fromJson(json["data"]),
-      );
+  HomeTabModel.fromJson(Map<String, dynamic> json) {
+    if(json["status"] is String) {
+      status = json["status"];
+    }
+    if(json["status_message"] is String) {
+      statusMessage = json["status_message"];
+    }
+    if(json["data"] is Map) {
+      data = json["data"] == null ? null : Data.fromJson(json["data"]);
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "status_message": statusMessage,
-        "data": data.toJson(),
-      };
+  static List<HomeTabModel> fromList(List<Map<String, dynamic>> list) {
+    return list.map(HomeTabModel.fromJson).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["status"] = status;
+    _data["status_message"] = statusMessage;
+    if(data != null) {
+      _data["data"] = data?.toJson();
+    }
+
+    return _data;
+  }
 }
 
-class MoviesData {
-  final int movieCount;
-  final int limit;
-  final int pageNumber;
-  final List<Movie> movies;
+class Data {
+  int? movieCount;
+  int? limit;
+  int? pageNumber;
+  List<Movies>? movies;
 
-  MoviesData({
-    required this.movieCount,
-    required this.limit,
-    required this.pageNumber,
-    required this.movies,
-  });
+  Data({this.movieCount, this.limit, this.pageNumber, this.movies});
 
-  factory MoviesData.fromJson(Map<String, dynamic> json) => MoviesData(
-        movieCount: json["movie_count"],
-        limit: json["limit"],
-        pageNumber: json["page_number"],
-        movies: List<Movie>.from(json["movies"].map((x) => Movie.fromJson(x))),
-      );
+  Data.fromJson(Map<String, dynamic> json) {
+    if(json["movie_count"] is int) {
+      movieCount = json["movie_count"];
+    }
+    if(json["limit"] is int) {
+      limit = json["limit"];
+    }
+    if(json["page_number"] is int) {
+      pageNumber = json["page_number"];
+    }
+    if(json["movies"] is List) {
+      movies = json["movies"] == null ? null : (json["movies"] as List).map((e) => Movies.fromJson(e)).toList();
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "movie_count": movieCount,
-        "limit": limit,
-        "page_number": pageNumber,
-        "movies": List<dynamic>.from(movies.map((x) => x.toJson())),
-      };
+  static List<Data> fromList(List<Map<String, dynamic>> list) {
+    return list.map(Data.fromJson).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["movie_count"] = movieCount;
+    _data["limit"] = limit;
+    _data["page_number"] = pageNumber;
+    if(movies != null) {
+      _data["movies"] = movies?.map((e) => e.toJson()).toList();
+    }
+    return _data;
+  }
 }
 
-class Movie {
-  final int id;
-  final String url;
-  final String imdbCode;
-  final String title;
-  final String titleEnglish;
-  final String titleLong;
-  final String slug;
-  final int year;
-  final double rating;
-  final int runtime;
-  final List<String> genres;
-  final String summary;
-  final String descriptionFull;
-  final String synopsis;
-  final String ytTrailerCode;
-  final String language;
-  final String mpaRating;
-  final String backgroundImage;
-  final String backgroundImageOriginal;
-  final String smallCoverImage;
-  final String mediumCoverImage;
-  final String largeCoverImage;
-  final String state;
-  final List<Torrent> torrents;
-  final String dateUploaded;
-  final int dateUploadedUnix;
+class Movies {
+  int? id;
+  String? url;
+  String? imdbCode;
+  String? title;
+  String? titleEnglish;
+  String? titleLong;
+  String? slug;
+  int? year;
+  double? rating;
+  int? runtime;
+  List<String>? genres;
+  String? summary;
+  String? descriptionFull;
+  String? synopsis;
+  String? ytTrailerCode;
+  String? language;
+  String? mpaRating;
+  String? backgroundImage;
+  String? backgroundImageOriginal;
+  String? smallCoverImage;
+  String? mediumCoverImage;
+  String? largeCoverImage;
+  String? state;
+  List<Torrents>? torrents;
+  String? dateUploaded;
+  int? dateUploadedUnix;
 
-  Movie({
-    required this.id,
-    required this.url,
-    required this.imdbCode,
-    required this.title,
-    required this.titleEnglish,
-    required this.titleLong,
-    required this.slug,
-    required this.year,
-    required this.rating,
-    required this.runtime,
-    required this.genres,
-    required this.summary,
-    required this.descriptionFull,
-    required this.synopsis,
-    required this.ytTrailerCode,
-    required this.language,
-    required this.mpaRating,
-    required this.backgroundImage,
-    required this.backgroundImageOriginal,
-    required this.smallCoverImage,
-    required this.mediumCoverImage,
-    required this.largeCoverImage,
-    required this.state,
-    required this.torrents,
-    required this.dateUploaded,
-    required this.dateUploadedUnix,
-  });
+  Movies({this.id, this.url, this.imdbCode, this.title, this.titleEnglish, this.titleLong, this.slug, this.year, this.rating, this.runtime, this.genres, this.summary, this.descriptionFull, this.synopsis, this.ytTrailerCode, this.language, this.mpaRating, this.backgroundImage, this.backgroundImageOriginal, this.smallCoverImage, this.mediumCoverImage, this.largeCoverImage, this.state, this.torrents, this.dateUploaded, this.dateUploadedUnix});
 
-  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
-        id: json["id"],
-        url: json["url"],
-        imdbCode: json["imdb_code"],
-        title: json["title"],
-        titleEnglish: json["title_english"],
-        titleLong: json["title_long"],
-        slug: json["slug"],
-        year: json["year"],
-        rating: json["rating"].toDouble(),
-        runtime: json["runtime"],
-        genres: List<String>.from(json["genres"].map((x) => x)),
-        summary: json["summary"],
-        descriptionFull: json["description_full"],
-        synopsis: json["synopsis"],
-        ytTrailerCode: json["yt_trailer_code"],
-        language: json["language"],
-        mpaRating: json["mpa_rating"],
-        backgroundImage: json["background_image"],
-        backgroundImageOriginal: json["background_image_original"],
-        smallCoverImage: json["small_cover_image"],
-        mediumCoverImage: json["medium_cover_image"],
-        largeCoverImage: json["large_cover_image"],
-        state: json["state"],
-        torrents: List<Torrent>.from(json["torrents"].map((x) => Torrent.fromJson(x))),
-        dateUploaded: json["date_uploaded"],
-        dateUploadedUnix: json["date_uploaded_unix"],
-      );
+  Movies.fromJson(Map<String, dynamic> json) {
+    if(json["id"] is int) {
+      id = json["id"];
+    }
+    if(json["url"] is String) {
+      url = json["url"];
+    }
+    if(json["imdb_code"] is String) {
+      imdbCode = json["imdb_code"];
+    }
+    if(json["title"] is String) {
+      title = json["title"];
+    }
+    if(json["title_english"] is String) {
+      titleEnglish = json["title_english"];
+    }
+    if(json["title_long"] is String) {
+      titleLong = json["title_long"];
+    }
+    if(json["slug"] is String) {
+      slug = json["slug"];
+    }
+    if(json["year"] is int) {
+      year = json["year"];
+    }
+    if(json["rating"] is double) {
+      rating = json["rating"];
+    }
+    if(json["runtime"] is int) {
+      runtime = json["runtime"];
+    }
+    if(json["genres"] is List) {
+      genres = json["genres"] == null ? null : List<String>.from(json["genres"]);
+    }
+    if(json["summary"] is String) {
+      summary = json["summary"];
+    }
+    if(json["description_full"] is String) {
+      descriptionFull = json["description_full"];
+    }
+    if(json["synopsis"] is String) {
+      synopsis = json["synopsis"];
+    }
+    if(json["yt_trailer_code"] is String) {
+      ytTrailerCode = json["yt_trailer_code"];
+    }
+    if(json["language"] is String) {
+      language = json["language"];
+    }
+    if(json["mpa_rating"] is String) {
+      mpaRating = json["mpa_rating"];
+    }
+    if(json["background_image"] is String) {
+      backgroundImage = json["background_image"];
+    }
+    if(json["background_image_original"] is String) {
+      backgroundImageOriginal = json["background_image_original"];
+    }
+    if(json["small_cover_image"] is String) {
+      smallCoverImage = json["small_cover_image"];
+    }
+    if(json["medium_cover_image"] is String) {
+      mediumCoverImage = json["medium_cover_image"];
+    }
+    if(json["large_cover_image"] is String) {
+      largeCoverImage = json["large_cover_image"];
+    }
+    if(json["state"] is String) {
+      state = json["state"];
+    }
+    if(json["torrents"] is List) {
+      torrents = json["torrents"] == null ? null : (json["torrents"] as List).map((e) => Torrents.fromJson(e)).toList();
+    }
+    if(json["date_uploaded"] is String) {
+      dateUploaded = json["date_uploaded"];
+    }
+    if(json["date_uploaded_unix"] is int) {
+      dateUploadedUnix = json["date_uploaded_unix"];
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "url": url,
-        "imdb_code": imdbCode,
-        "title": title,
-        "title_english": titleEnglish,
-        "title_long": titleLong,
-        "slug": slug,
-        "year": year,
-        "rating": rating,
-        "runtime": runtime,
-        "genres": List<dynamic>.from(genres.map((x) => x)),
-        "summary": summary,
-        "description_full": descriptionFull,
-        "synopsis": synopsis,
-        "yt_trailer_code": ytTrailerCode,
-        "language": language,
-        "mpa_rating": mpaRating,
-        "background_image": backgroundImage,
-        "background_image_original": backgroundImageOriginal,
-        "small_cover_image": smallCoverImage,
-        "medium_cover_image": mediumCoverImage,
-        "large_cover_image": largeCoverImage,
-        "state": state,
-        "torrents": List<dynamic>.from(torrents.map((x) => x.toJson())),
-        "date_uploaded": dateUploaded,
-        "date_uploaded_unix": dateUploadedUnix,
-      };
+  static List<Movies> fromList(List<Map<String, dynamic>> list) {
+    return list.map(Movies.fromJson).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["id"] = id;
+    _data["url"] = url;
+    _data["imdb_code"] = imdbCode;
+    _data["title"] = title;
+    _data["title_english"] = titleEnglish;
+    _data["title_long"] = titleLong;
+    _data["slug"] = slug;
+    _data["year"] = year;
+    _data["rating"] = rating;
+    _data["runtime"] = runtime;
+    if(genres != null) {
+      _data["genres"] = genres;
+    }
+    _data["summary"] = summary;
+    _data["description_full"] = descriptionFull;
+    _data["synopsis"] = synopsis;
+    _data["yt_trailer_code"] = ytTrailerCode;
+    _data["language"] = language;
+    _data["mpa_rating"] = mpaRating;
+    _data["background_image"] = backgroundImage;
+    _data["background_image_original"] = backgroundImageOriginal;
+    _data["small_cover_image"] = smallCoverImage;
+    _data["medium_cover_image"] = mediumCoverImage;
+    _data["large_cover_image"] = largeCoverImage;
+    _data["state"] = state;
+    if(torrents != null) {
+      _data["torrents"] = torrents?.map((e) => e.toJson()).toList();
+    }
+    _data["date_uploaded"] = dateUploaded;
+    _data["date_uploaded_unix"] = dateUploadedUnix;
+    return _data;
+  }
 }
 
-class Torrent {
-  final String url;
-  final String hash;
-  final String quality;
-  final String type;
-  final String isRepack;
-  final String videoCodec;
-  final String bitDepth;
-  final String audioChannels;
-  final int seeds;
-  final int peers;
-  final String size;
-  final int sizeBytes;
-  final String dateUploaded;
-  final int dateUploadedUnix;
+class Torrents {
+  String? url;
+  String? hash;
+  String? quality;
+  String? type;
+  String? isRepack;
+  String? videoCodec;
+  String? bitDepth;
+  String? audioChannels;
+  int? seeds;
+  int? peers;
+  String? size;
+  int? sizeBytes;
+  String? dateUploaded;
+  int? dateUploadedUnix;
 
-  Torrent({
-    required this.url,
-    required this.hash,
-    required this.quality,
-    required this.type,
-    required this.isRepack,
-    required this.videoCodec,
-    required this.bitDepth,
-    required this.audioChannels,
-    required this.seeds,
-    required this.peers,
-    required this.size,
-    required this.sizeBytes,
-    required this.dateUploaded,
-    required this.dateUploadedUnix,
-  });
+  Torrents({this.url, this.hash, this.quality, this.type, this.isRepack, this.videoCodec, this.bitDepth, this.audioChannels, this.seeds, this.peers, this.size, this.sizeBytes, this.dateUploaded, this.dateUploadedUnix});
 
-  factory Torrent.fromJson(Map<String, dynamic> json) => Torrent(
-        url: json["url"],
-        hash: json["hash"],
-        quality: json["quality"],
-        type: json["type"],
-        isRepack: json["is_repack"],
-        videoCodec: json["video_codec"],
-        bitDepth: json["bit_depth"],
-        audioChannels: json["audio_channels"],
-        seeds: json["seeds"],
-        peers: json["peers"],
-        size: json["size"],
-        sizeBytes: json["size_bytes"],
-        dateUploaded: json["date_uploaded"],
-        dateUploadedUnix: json["date_uploaded_unix"],
-      );
+  Torrents.fromJson(Map<String, dynamic> json) {
+    if(json["url"] is String) {
+      url = json["url"];
+    }
+    if(json["hash"] is String) {
+      hash = json["hash"];
+    }
+    if(json["quality"] is String) {
+      quality = json["quality"];
+    }
+    if(json["type"] is String) {
+      type = json["type"];
+    }
+    if(json["is_repack"] is String) {
+      isRepack = json["is_repack"];
+    }
+    if(json["video_codec"] is String) {
+      videoCodec = json["video_codec"];
+    }
+    if(json["bit_depth"] is String) {
+      bitDepth = json["bit_depth"];
+    }
+    if(json["audio_channels"] is String) {
+      audioChannels = json["audio_channels"];
+    }
+    if(json["seeds"] is int) {
+      seeds = json["seeds"];
+    }
+    if(json["peers"] is int) {
+      peers = json["peers"];
+    }
+    if(json["size"] is String) {
+      size = json["size"];
+    }
+    if(json["size_bytes"] is int) {
+      sizeBytes = json["size_bytes"];
+    }
+    if(json["date_uploaded"] is String) {
+      dateUploaded = json["date_uploaded"];
+    }
+    if(json["date_uploaded_unix"] is int) {
+      dateUploadedUnix = json["date_uploaded_unix"];
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "url": url,
-        "hash": hash,
-        "quality": quality,
-        "type": type,
-        "is_repack": isRepack,
-        "video_codec": videoCodec,
-        "bit_depth": bitDepth,
-        "audio_channels": audioChannels,
-        "seeds": seeds,
-        "peers": peers,
-        "size": size,
-        "size_bytes": sizeBytes,
-        "date_uploaded": dateUploaded,
-        "date_uploaded_unix": dateUploadedUnix,
-      };
+  static List<Torrents> fromList(List<Map<String, dynamic>> list) {
+    return list.map(Torrents.fromJson).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> _data = <String, dynamic>{};
+    _data["url"] = url;
+    _data["hash"] = hash;
+    _data["quality"] = quality;
+    _data["type"] = type;
+    _data["is_repack"] = isRepack;
+    _data["video_codec"] = videoCodec;
+    _data["bit_depth"] = bitDepth;
+    _data["audio_channels"] = audioChannels;
+    _data["seeds"] = seeds;
+    _data["peers"] = peers;
+    _data["size"] = size;
+    _data["size_bytes"] = sizeBytes;
+    _data["date_uploaded"] = dateUploaded;
+    _data["date_uploaded_unix"] = dateUploadedUnix;
+    return _data;
+  }
 }

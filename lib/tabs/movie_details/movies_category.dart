@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+
+
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 
 class MoviesCategory extends StatelessWidget {
-  String category;
+  String  genereName;
 
-  MoviesCategory({required this.category});
+  MoviesCategory({super.key, required this.genereName});
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Container(
       padding: EdgeInsets.symmetric(
-          horizontal: screenSize.width * 0.055,
+          horizontal: screenSize.width * 0.02,
           vertical: screenSize.height * .02),
-      margin: EdgeInsets.symmetric(
-        horizontal: screenSize.width * 0.03,
-      ),
+
       decoration: BoxDecoration(
+      
           borderRadius: BorderRadius.circular(16), color: AppColor.grey),
       child: Text(
-        category,
+        genereName,  
         style: AppStyles.regular16RobotoWhite,
       ),
     );

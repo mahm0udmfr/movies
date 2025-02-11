@@ -7,7 +7,7 @@ class FavoriteDateTime extends StatelessWidget {
   String url;
   String number;
 
-  FavoriteDateTime({required this.number, required this.url});
+  FavoriteDateTime({super.key, required this.number, required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,6 @@ class FavoriteDateTime extends StatelessWidget {
         ],
       ),
     );
-    ;
+    
   }
 }
