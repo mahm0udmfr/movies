@@ -5,4 +5,5 @@ class EndPoints {
   static const String register = "/auth/register";
   static const String profile = "/profile";
   static const String resetPassword = "/auth/reset-password";
+  static const String suggestions = "/api/v2/movie_suggestions.json";
 }

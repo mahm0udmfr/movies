@@ -32,7 +32,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-            child: BlocBuilder<MovieDetailsViewModel, MovieDetailsState>(
+            child: BlocBuilder<MovieDetailsViewModel, MovieState>(
           bloc: viewModel,
           builder: (context, state) {
             if (state is AvailableNowLoadingState) {
