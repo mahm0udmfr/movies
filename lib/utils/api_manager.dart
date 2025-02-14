@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
 import 'package:movies/model/movie_details_model.dart';
+import 'package:movies/model/movie_suggestions.dart';
+import 'package:movies/model/reset_password_model.dart';
 import 'package:movies/model/update_profile_model.dart';
 import 'package:movies/model/user_model.dart';
-import 'package:movies/model/reset_password_model.dart';
-
 import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
@@ -192,6 +192,18 @@ class ApiManager {
       return ResetPasswordModel.fromJson(jsonDecode(response.body));
     } catch (e) {
       rethrow;
+    }
+  }
+
+  static Future<MovieSuggestions?> suggestions(
+      {required String movieId}) async {
+    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.suggestions,
+        {'movie_id': movieId});
+    try {
+      var response = await http.get(url);
+      return MovieSuggestions.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
     }
   }
 }
