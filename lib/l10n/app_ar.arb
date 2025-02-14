@@ -36,6 +36,7 @@
   "history": "السجل",
   "watch_list": "قائمة المشاهدة",
   "edit_profile": "تعديل الملف الشخصي",
-  "exit": "خروج"
-
+  "exit": "خروج",
+  "new_password": "كلمة المرور الجديدة",
+  "password_updated_successfully": "تم تغيير كلمة المرور بنجاح"
 }

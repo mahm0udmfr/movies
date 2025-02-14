@@ -10,12 +10,12 @@ class HomeTabViewModel extends Cubit<HomeTabState> {
       emit(AvailableNowLoadingState());
       var response = await ApiManager.getMovies();
       if (response!.status == 'error') {
-        emit(AvailableNowErrorState(errorMessage: response.statusMessage));
+        emit(AvailableNowErrorState(errorMessage: response.statusMessage ?? "error getting data"));
         return;
       }
 
       if (response.status == 'ok') {
-        emit(AvailableNowSuccessState(availableNowList: response.data.movies));
+        emit(AvailableNowSuccessState(availableNowList: response.data!.movies!));
         return;
       }
     } catch (e) {
@@ -28,12 +28,12 @@ void getMoviesByCategoryName(String categoryName) async {
       emit(AvailableNowLoadingState());
       var response = await ApiManager.getMoviesByCategoryName(categoryName);
       if (response!.status == 'error') {
-        emit(AvailableNowErrorState(errorMessage: response.statusMessage));
+        emit(AvailableNowErrorState(errorMessage: response.statusMessage??"error getting data"));
         return;
       }
 
       if (response.status == 'ok') {
-        emit(AvailableNowSuccessState(availableNowList: response.data.movies));
+        emit(AvailableNowSuccessState(availableNowList: response.data!.movies!));
         return;
       }
       

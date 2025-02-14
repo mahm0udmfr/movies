@@ -3,6 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
+import 'package:movies/model/movie_details_model.dart';
+import 'package:movies/model/update_profile_model.dart';
+import 'package:movies/model/user_model.dart';
+import 'package:movies/model/reset_password_model.dart';
+
+import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/end_points.dart';
 
@@ -19,6 +25,21 @@ class ApiManager {
       return HomeTabModel.fromJson(jsonDecode(response.body));
     } catch (e) {
       // ignore: use_rethrow_when_possible
+      return null;
+    }
+  }
+
+  static Future<MovieDetailsModel?> getMovieDetail({required String movieId}) async {
+    Uri url = Uri.https(
+      ApiConstant.moviesBaseUrl,
+      EndPoints.moviedetails,
+      {'movie_id': movieId, 'with_images': 'true', 'with_cast': 'true'},
+    );
+
+    try {
+      var response = await http.get(url);
+      return MovieDetailsModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
       return null;
     }
   }
@@ -58,7 +79,6 @@ class ApiManager {
     }
   }
 
-
   static Future<RegisterModel?> register({
     required String userName,
     required String userEmail,
@@ -90,5 +110,88 @@ class ApiManager {
     }
   }
 
+  static Future<UserModel?> getUserData() async {
+    Uri url = Uri.https(
+      ApiConstant.userBaseUrl,
+      EndPoints.profile,
+    );
+    try {
+      var response = await http.get(
+        url,
+        headers: {
+          "Authorization": "Bearer ${MyServices.getString("Token")}",
+        },
+      );
+      return UserModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
 
+  static Future<UpdateProfileModel?> updateUserNameAndPhone({
+    required String userName,
+    required String phone,
+    required int avaterId,
+  }) async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
+
+    Map<String, dynamic> requestBody = {
+      "name": userName,
+      "phone": phone,
+      "avaterId": avaterId,
+    };
+
+    try {
+      var response = await http.patch(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": "Bearer ${MyServices.getString("Token")}"
+        },
+        body: jsonEncode(requestBody),
+      );
+      return UpdateProfileModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<UpdateProfileModel?> deleteProfile() async {
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
+
+    try {
+      var response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": "Bearer ${MyServices.getString("Token")}"
+        },
+      );
+      return UpdateProfileModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<ResetPasswordModel?> resetPassword({
+    required String oldPass,
+    required String newPass,
+  }) async {
+    try {
+      String? token =
+          MyServices.getString("Token"); //get oken from shared prefrences
+      if (token == null) {
+        return Future.error("token doesn't found");
+      }
+      Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.resetPassword);
+
+      var response = await http.patch(url,
+          headers: {"AUTHORIZATION": "Bearer $token"},
+          body: {"oldPassword": oldPass, "newPassword": newPass});
+
+      return ResetPasswordModel.fromJson(jsonDecode(response.body));
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

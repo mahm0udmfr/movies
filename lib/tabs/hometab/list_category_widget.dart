@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/tabs/hometab/movie_widget.dart';
+import 'package:movies/tabs/movie_details/cubit/movie_details_view_model.dart';
+import 'package:movies/tabs/movie_details/movie_details.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 
 class ListCategoryWidget extends StatefulWidget {
-  final List<Movie> availableNowList;
+  final List<Movies> availableNowList;
 
   const ListCategoryWidget({super.key, required this.availableNowList});
 
@@ -51,12 +53,19 @@ class ListCategoryWidgetState extends State<ListCategoryWidget> {
         SizedBox(
           height: screenSize.height * 0.25,
           child: ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(width: screenSize.width * 0.05),
+            separatorBuilder: (context, index) =>
+                SizedBox(width: screenSize.width * 0.05),
             itemCount: widget.availableNowList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return MovieWidget(
-                imageUrl: widget.availableNowList[index].mediumCoverImage,
+                onTap: () {
+      
+                  MovieDetailsViewModel.instance.getMovieById(
+                          widget.availableNowList[index].id!.toString());
+                  Navigator.of(context).pushNamed(MovieDetailsScreen.routeName);
+                },
+                imageUrl: widget.availableNowList[index].mediumCoverImage ?? "",
                 ratingText: widget.availableNowList[index].rating.toString(),
               );
             },
