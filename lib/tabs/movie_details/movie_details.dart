@@ -53,7 +53,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ],
                 ),
               );
-            } else if (state is AvailableNowSuccessState) {
+            } else if (state is AvailableNowSuccessState ) {
               return Column(
                 spacing: screenSize.height * .02,
                 children: [
@@ -65,7 +65,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                                state.movieDetails.largeCoverImage!),
+                                state.movieDetails.largeCoverImage??""),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -111,7 +111,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             Image.asset(ImageAssets.moviePlay),
                             Spacer(),
                             Text(
-                              state.movieDetails.titleLong!,
+                              state.movieDetails.titleLong??"",
                               style: AppStyles.bold24RobotoWhite,
                             ),
                             Text(
@@ -140,34 +140,34 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             FavoriteDateTime(
-                                number: state.movieDetails.likeCount.toString(),
+                                number: state.movieDetails.likeCount??0,
                                 url: ImageAssets.yellowFavorite),
                             FavoriteDateTime(
-                                number: state.movieDetails.runtime.toString(),
+                                number: state.movieDetails.runtime??0,
                                 url: ImageAssets.movieTime),
                             FavoriteDateTime(
-                                number: state.movieDetails.rating.toString(),
+                                number: state.movieDetails.rating??0, 
                                 url: ImageAssets.movieRate),
                           ],
                         ),
                         titleText("Screen Shots"),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage1!),
+                            state.movieDetails.largeScreenshotImage1??""),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage2!),
+                            state.movieDetails.largeScreenshotImage2??""),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage3!),
+                            state.movieDetails.largeScreenshotImage3??""),
                         titleText("Similar"),
                         SizedBox(
                           width: double.infinity,
                           height: screenSize.height * .46,
                           child: GridView.builder(
-                              itemCount: 4,
+                              itemCount: viewModel.suggestionMovies.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
-                                return similarMovies(imagePath);
+                                return similarMovies(viewModel.suggestionMovies[index].backgroundImage);
                               }),
                         ),
                         titleText("Summary"),

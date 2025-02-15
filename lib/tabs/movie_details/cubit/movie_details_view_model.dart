@@ -4,7 +4,7 @@ import 'package:movies/tabs/movie_details/cubit/movie_details_state.dart';
 import 'package:movies/utils/api_manager.dart';
 
 class MovieDetailsViewModel extends Cubit<MovieState> {
-  List<MoviesSuggestionSmall>? suggestionMovies;
+  List<MoviesSuggestionSmall> suggestionMovies=[];
   MovieDetailsViewModel._() : super(AvailableNowLoadingState());
 
   static final MovieDetailsViewModel _instance = MovieDetailsViewModel._();
@@ -22,9 +22,11 @@ class MovieDetailsViewModel extends Cubit<MovieState> {
       }
 
       if (response.status == 'ok') {
+
         emit(AvailableNowSuccessState(
             movieDetails: response.data!.movieDetails!));
-        return;
+    
+    getSuggestionById(movieId);
       }
     } catch (e) {
       emit(AvailableNowErrorState(errorMessage: e.toString()));
@@ -40,7 +42,7 @@ class MovieDetailsViewModel extends Cubit<MovieState> {
       }
 
       if (response.status == 'ok') {
-        suggestionMovies = response.data!.movies!;
+        suggestionMovies = response.data!.movies??[];
         emit(SuggestionsSuccessState(suggestionResponse: response));
       }
     } catch (e) {
