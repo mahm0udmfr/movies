@@ -167,7 +167,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
-                                return similarMovies();
+                                return similarMovies(imagePath);
                               }),
                         ),
                         titleText("Summary"),
@@ -239,7 +239,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget similarMovies() {
-    return Movieslist();
+  Widget similarMovies(String? imagePath) {
+    return Movieslist(
+      imagePath: imagePath,
+    );
   }
 }

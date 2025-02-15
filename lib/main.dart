@@ -13,12 +13,14 @@ import 'package:movies/tabs/hometab/home_tab.dart';
 import 'package:movies/tabs/movie_details/movie_details.dart';
 import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/utils/apptheme.dart';
+import 'package:movies/utils/bloc_observer.dart';
 
 import 'Auth/Login/loginscreen.dart';
 import 'Auth/register/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   await MyServices.init();
   runApp(const MyApp());
 }
@@ -52,10 +54,11 @@ class MyApp extends StatelessWidget {
               ProfileTab.routename: (context) => ProfileTab(),
               MovieDetailsScreen.routeName: (context) => MovieDetailsScreen(),
             },
-            initialRoute: MyServices.getString("step") == "1"
-                ? LoginScreen.routeName
-                : OnBoarding.routename,
-          );
+              initialRoute: HomeScreen.routename
+              // MyServices.getString("step") == "1"
+              //     ? LoginScreen.routeName
+              //     : OnBoarding.routename,
+              );
         },
       ),
     );
