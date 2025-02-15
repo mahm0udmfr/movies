@@ -5,7 +5,7 @@ import '../../utils/colors.dart';
 
 class FavoriteDateTime extends StatelessWidget {
   String url;
-  String number;
+  num number;
 
   FavoriteDateTime({super.key, required this.number, required this.url});
 
@@ -26,7 +26,7 @@ class FavoriteDateTime extends StatelessWidget {
         children: [
           Image.asset(url),
           Text(
-            number,
+            number.toString(),
             style: AppStyles.bold24White,
           )
         ],
