@@ -25,7 +25,7 @@ class SuggestionsErrorState extends MovieState {
 }
 
 class SuggestionsSuccessState extends MovieState {
-  MovieSuggestions movieSuggestions;
+  SuggestionResponse suggestionResponse;
 
-  SuggestionsSuccessState({required this.movieSuggestions});
+  SuggestionsSuccessState({required this.suggestionResponse});
 }

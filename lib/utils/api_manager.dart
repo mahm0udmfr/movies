@@ -195,13 +195,13 @@ class ApiManager {
     }
   }
 
-  static Future<MovieSuggestions?> suggestions(
+  static Future<SuggestionResponse?> suggestions(
       {required String movieId}) async {
     Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.suggestions,
         {'movie_id': movieId});
     try {
       var response = await http.get(url);
-      return MovieSuggestions.fromJson(jsonDecode(response.body));
+      return SuggestionResponse.fromJson(jsonDecode(response.body));
     } catch (e) {
       return null;
     }

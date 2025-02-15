@@ -1,22 +1,18 @@
-class MovieSuggestions {
-  MovieSuggestions({
+class SuggestionResponse {
+  SuggestionResponse({
     this.status,
     this.statusMessage,
     this.data,
-    this.meta,
   });
 
-  MovieSuggestions.fromJson(dynamic json) {
+  SuggestionResponse.fromJson(dynamic json) {
     status = json['status'];
     statusMessage = json['status_message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    meta = json['@meta'] != null ? Meta.fromJson(json['@meta']) : null;
+    data = json['data'] != null ? SuggestionData.fromJson(json['data']) : null;
   }
-
   String? status;
   String? statusMessage;
-  Data? data;
-  Meta? meta;
+  SuggestionData? data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -25,61 +21,29 @@ class MovieSuggestions {
     if (data != null) {
       map['data'] = data?.toJson();
     }
-    if (meta != null) {
-      map['@meta'] = meta?.toJson();
-    }
     return map;
   }
+
 }
 
-class Meta {
-  Meta({
-    this.serverTime,
-    this.serverTimezone,
-    this.apiVersion,
-    this.executionTime,
-  });
-
-  Meta.fromJson(dynamic json) {
-    serverTime = json['server_time'];
-    serverTimezone = json['server_timezone'];
-    apiVersion = json['api_version'];
-    executionTime = json['execution_time'];
-  }
-
-  int? serverTime;
-  String? serverTimezone;
-  int? apiVersion;
-  String? executionTime;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['server_time'] = serverTime;
-    map['server_timezone'] = serverTimezone;
-    map['api_version'] = apiVersion;
-    map['execution_time'] = executionTime;
-    return map;
-  }
-}
-
-class Data {
-  Data({
+class SuggestionData {
+  SuggestionData({
     this.movieCount,
     this.movies,
   });
 
-  Data.fromJson(dynamic json) {
+  SuggestionData.fromJson(dynamic json) {
     movieCount = json['movie_count'];
     if (json['movies'] != null) {
       movies = [];
       json['movies'].forEach((v) {
-        movies?.add(Movies.fromJson(v));
+        movies?.add(MoviesSuggestionSmall.fromJson(v));
       });
     }
   }
 
-  int? movieCount;
-  List<Movies>? movies;
+  num? movieCount;
+  List<MoviesSuggestionSmall>? movies;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -91,8 +55,8 @@ class Data {
   }
 }
 
-class Movies {
-  Movies({
+class MoviesSuggestionSmall {
+  MoviesSuggestionSmall({
     this.id,
     this.url,
     this.imdbCode,
@@ -120,7 +84,7 @@ class Movies {
     this.dateUploadedUnix,
   });
 
-  Movies.fromJson(dynamic json) {
+  MoviesSuggestionSmall.fromJson(dynamic json) {
     id = json['id'];
     url = json['url'];
     imdbCode = json['imdb_code'];
@@ -153,16 +117,16 @@ class Movies {
     dateUploadedUnix = json['date_uploaded_unix'];
   }
 
-  int? id;
+  num? id;
   String? url;
   String? imdbCode;
   String? title;
   String? titleEnglish;
   String? titleLong;
   String? slug;
-  int? year;
-  double? rating;
-  int? runtime;
+  num? year;
+  num? rating;
+  num? runtime;
   List<String>? genres;
   String? summary;
   String? descriptionFull;
@@ -177,7 +141,7 @@ class Movies {
   String? state;
   List<Torrents>? torrents;
   String? dateUploaded;
-  int? dateUploadedUnix;
+  num? dateUploadedUnix;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -244,7 +208,6 @@ class Torrents {
     dateUploaded = json['date_uploaded'];
     dateUploadedUnix = json['date_uploaded_unix'];
   }
-
   String? url;
   String? hash;
   String? quality;
@@ -252,12 +215,12 @@ class Torrents {
   String? videoCodec;
   String? bitDepth;
   String? audioChannels;
-  int? seeds;
-  int? peers;
+  num? seeds;
+  num? peers;
   String? size;
-  int? sizeBytes;
+  num? sizeBytes;
   String? dateUploaded;
-  int? dateUploadedUnix;
+  num? dateUploadedUnix;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -276,4 +239,5 @@ class Torrents {
     map['date_uploaded_unix'] = dateUploadedUnix;
     return map;
   }
+
 }
