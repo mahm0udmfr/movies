@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/model/movie_suggestions.dart';
 import 'package:movies/tabs/movie_details/cubit/movie_details_state.dart';
 import 'package:movies/utils/api_manager.dart';
 
-class MovieDetailsViewModel extends Cubit<MovieDetailsState> {
+class MovieDetailsViewModel extends Cubit<MovieState> {
+  List<MoviesSuggestionSmall> suggestionMovies = [];
   MovieDetailsViewModel._() : super(AvailableNowLoadingState());
 
   static final MovieDetailsViewModel _instance = MovieDetailsViewModel._();
@@ -20,12 +22,32 @@ class MovieDetailsViewModel extends Cubit<MovieDetailsState> {
       }
 
       if (response.status == 'ok') {
+        
+        getSuggestionById(movieId);
         emit(AvailableNowSuccessState(
             movieDetails: response.data!.movieDetails!));
-        return;
+
       }
     } catch (e) {
       emit(AvailableNowErrorState(errorMessage: e.toString()));
+    }
+  }
+
+  void getSuggestionById(String movieId) async {
+  
+    try {
+      emit(SuggestionsLoadingState());
+      var response = await ApiManager.suggestions(movieId: movieId);
+      if (response!.status != 'ok') {
+        emit(SuggestionsErrorState(errorMessage: response.statusMessage!));
+      }
+
+      if (response.status == 'ok') {
+        suggestionMovies = response.data!.movies ?? [];
+        emit(SuggestionsSuccessState(suggestionResponse: response));
+      }
+    } catch (e) {
+      emit(SuggestionsErrorState(errorMessage: e.toString()));
     }
   }
 }

@@ -5,8 +5,9 @@ import '../../utils/colors.dart';
 import '../../utils/imageassets.dart';
 
 class Movieslist extends StatelessWidget {
-  const Movieslist({super.key});
+  String? imagePath;
 
+  Movieslist({super.key, this.imagePath});
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -18,7 +19,8 @@ class Movieslist extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-            image: AssetImage(ImageAssets.adelShakal), fit: BoxFit.fill),
+            image: NetworkImage(imagePath ?? ImageAssets.adelShakal),
+            fit: BoxFit.fill),
       ),
       child: Container(
         decoration: BoxDecoration(
