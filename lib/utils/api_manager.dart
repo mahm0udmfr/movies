@@ -1,30 +1,38 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
 import 'package:movies/model/movie_details_model.dart';
 import 'package:movies/model/movie_suggestions.dart';
 import 'package:movies/model/reset_password_model.dart';
+import 'package:movies/model/search_tab_model.dart';
 import 'package:movies/model/update_profile_model.dart';
 import 'package:movies/model/user_model.dart';
 import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
+import 'package:movies/utils/api_services.dart';
 import 'package:movies/utils/end_points.dart';
-
 import '../model/register_model.dart';
 
 class ApiManager {
   static Future<HomeTabModel?> getMovies() async {
+    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.listMovies);
+    try {
+      var jsonResponse = await ApiService.makeRequest(url: url);
+      return HomeTabModel.fromJson(jsonResponse);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<SearchTabModel?> searchMovie(String movieTitle) async {
     Uri url = Uri.https(
       ApiConstant.moviesBaseUrl,
       EndPoints.listMovies,
+      {'query_term': movieTitle},
     );
     try {
-      var response = await http.get(url);
-      return HomeTabModel.fromJson(jsonDecode(response.body));
+      var jsonResponse = await ApiService.makeRequest(url: url);
+      return SearchTabModel.fromJson(jsonResponse);
     } catch (e) {
-      // ignore: use_rethrow_when_possible
       return null;
     }
   }
@@ -37,8 +45,8 @@ class ApiManager {
     );
 
     try {
-      var response = await http.get(url);
-      return MovieDetailsModel.fromJson(jsonDecode(response.body));
+      var jsonResponse = await ApiService.makeRequest(url: url);
+      return MovieDetailsModel.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
@@ -46,34 +54,33 @@ class ApiManager {
 
   static Future<HomeTabModel?> getMoviesByCategoryName(String catName) async {
     Uri url = Uri.https(
-        ApiConstant.moviesBaseUrl, EndPoints.listMovies, {'genre': catName});
+      ApiConstant.moviesBaseUrl,
+      EndPoints.listMovies,
+      {'genre': catName},
+    );
     try {
-      var response = await http.get(url);
-      return HomeTabModel.fromJson(jsonDecode(response.body));
+      var jsonResponse = await ApiService.makeRequest(url: url);
+      return HomeTabModel.fromJson(jsonResponse);
     } catch (e) {
-      // ignore: use_rethrow_when_possible
       return null;
     }
   }
 
-  static Future<LoginModel?> loginByEmailAndPassword(
-    String userEmail,
-    String userPassword,
-  ) async {
+  static Future<LoginModel?> loginByEmailAndPassword(String userEmail, String userPassword) async {
     Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.login);
-
     Map<String, dynamic> requestBody = {
       "email": userEmail,
       "password": userPassword,
     };
 
     try {
-      var response = await http.post(
-        url,
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestBody),
+        body: requestBody,
       );
-      return LoginModel.fromJson(jsonDecode(response.body));
+      return LoginModel.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
@@ -88,7 +95,6 @@ class ApiManager {
     required int avaterId,
   }) async {
     Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.register);
-
     Map<String, dynamic> requestBody = {
       "name": userName,
       "email": userEmail,
@@ -99,30 +105,26 @@ class ApiManager {
     };
 
     try {
-      var response = await http.post(
-        url,
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(requestBody),
+        body: requestBody,
       );
-      return RegisterModel.fromJson(jsonDecode(response.body));
+      return RegisterModel.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
   }
 
   static Future<UserModel?> getUserData() async {
-    Uri url = Uri.https(
-      ApiConstant.userBaseUrl,
-      EndPoints.profile,
-    );
+    Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
     try {
-      var response = await http.get(
-        url,
-        headers: {
-          "Authorization": "Bearer ${MyServices.getString("Token")}",
-        },
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        headers: {"Authorization": "Bearer ${MyServices.getString("Token")}"},
       );
-      return UserModel.fromJson(jsonDecode(response.body));
+      return UserModel.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
@@ -134,7 +136,6 @@ class ApiManager {
     required int avaterId,
   }) async {
     Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
-
     Map<String, dynamic> requestBody = {
       "name": userName,
       "phone": phone,
@@ -142,15 +143,16 @@ class ApiManager {
     };
 
     try {
-      var response = await http.patch(
-        url,
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "PATCH",
         headers: {
           'Content-Type': 'application/json',
           "Authorization": "Bearer ${MyServices.getString("Token")}"
         },
-        body: jsonEncode(requestBody),
+        body: requestBody,
       );
-      return UpdateProfileModel.fromJson(jsonDecode(response.body));
+      return UpdateProfileModel.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
@@ -158,16 +160,16 @@ class ApiManager {
 
   static Future<UpdateProfileModel?> deleteProfile() async {
     Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.profile);
-
     try {
-      var response = await http.delete(
-        url,
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
           "Authorization": "Bearer ${MyServices.getString("Token")}"
         },
       );
-      return UpdateProfileModel.fromJson(jsonDecode(response.body));
+      return UpdateProfileModel.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
@@ -178,30 +180,35 @@ class ApiManager {
     required String newPass,
   }) async {
     try {
-      String? token =
-          MyServices.getString("Token"); //get oken from shared prefrences
+      String? token = MyServices.getString("Token"); 
       if (token == null) {
-        return Future.error("token doesn't found");
+        return Future.error("Token not found");
       }
+
       Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.resetPassword);
+      Map<String, dynamic> requestBody = {
+        "oldPassword": oldPass,
+        "newPassword": newPass
+      };
 
-      var response = await http.patch(url,
-          headers: {"AUTHORIZATION": "Bearer $token"},
-          body: {"oldPassword": oldPass, "newPassword": newPass});
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "PATCH",
+        headers: {"Authorization": "Bearer $token"},
+        body: requestBody,
+      );
 
-      return ResetPasswordModel.fromJson(jsonDecode(response.body));
+      return ResetPasswordModel.fromJson(jsonResponse);
     } catch (e) {
-      rethrow;
+      return null;
     }
   }
 
-  static Future<SuggestionResponse?> suggestions(
-      {required String movieId}) async {
-    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.suggestions,
-        {'movie_id': movieId});
+  static Future<SuggestionResponse?> suggestions({required String movieId}) async {
+    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.suggestions, {'movie_id': movieId});
     try {
-      var response = await http.get(url);
-      return SuggestionResponse.fromJson(jsonDecode(response.body));
+      var jsonResponse = await ApiService.makeRequest(url: url);
+      return SuggestionResponse.fromJson(jsonResponse);
     } catch (e) {
       return null;
     }
