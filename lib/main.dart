@@ -54,11 +54,10 @@ class MyApp extends StatelessWidget {
               ProfileTab.routename: (context) => ProfileTab(),
               MovieDetailsScreen.routeName: (context) => MovieDetailsScreen(),
             },
-              initialRoute: HomeScreen.routename
-              // MyServices.getString("step") == "1"
-              //     ? LoginScreen.routeName
-              //     : OnBoarding.routename,
-              );
+            initialRoute: MyServices.getString("step") == "1"
+                ? LoginScreen.routeName
+                : OnBoarding.routename,
+          );
         },
       ),
     );

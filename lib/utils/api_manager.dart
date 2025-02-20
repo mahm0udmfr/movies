@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:movies/model/get_all_favorites_model.dart';
 import 'package:movies/model/home_tab_model.dart';
 import 'package:movies/model/login_model.dart';
 import 'package:movies/model/movie_details_model.dart';
@@ -10,6 +14,7 @@ import 'package:movies/services.dart';
 import 'package:movies/utils/api_constant.dart';
 import 'package:movies/utils/api_services.dart';
 import 'package:movies/utils/end_points.dart';
+
 import '../model/register_model.dart';
 
 class ApiManager {
@@ -210,6 +215,32 @@ class ApiManager {
       var jsonResponse = await ApiService.makeRequest(url: url);
       return SuggestionResponse.fromJson(jsonResponse);
     } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<GetAllFavorites?> getAllFavoriteMovies(
+      {required String token}) async {
+    Uri url = Uri.https(
+      ApiConstant.userBaseUrl,
+      EndPoints.allFavorites,
+    );
+
+    try {
+      var response = await http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      });
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return GetAllFavorites.fromJson(jsonDecode(response.body));
+      } else {
+        print('Failed to load data: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      print('Error: $e');
       return null;
     }
   }

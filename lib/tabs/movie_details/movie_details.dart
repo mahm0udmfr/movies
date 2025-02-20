@@ -190,6 +190,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                                 .getMovieById(viewModel
                                                     .suggestionMovies[index].id
                                                     .toString());
+
                                             Navigator.of(context).pushNamed(
                                                 MovieDetailsScreen.routeName);
                                           },

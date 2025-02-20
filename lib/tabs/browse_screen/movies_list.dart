@@ -6,8 +6,11 @@ import '../../utils/imageassets.dart';
 
 class Movieslist extends StatelessWidget {
   String? imagePath;
+  String? rating;
 
-  Movieslist({super.key, this.imagePath});
+  String? name;
+
+  Movieslist({super.key, this.imagePath, this.name, this.rating});
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -36,7 +39,7 @@ class Movieslist extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "7.5 ",
+              "$rating",
               style: AppStyles.regular16RobotoWhite,
             ),
             Icon(
