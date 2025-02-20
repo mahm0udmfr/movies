@@ -4,7 +4,9 @@ import 'package:movies/tabs/searchTab/cubit/search_tab_states.dart';
 import 'package:movies/utils/api_manager.dart';
 
 class SearchTabViewModel extends Cubit<SearchStates> {
-  SearchTabViewModel._() : super(SearchLoadingState());
+  SearchTabViewModel._() : super(SearchLoadingState()) {
+    getSearchMovies();
+  }
 
   static final SearchTabViewModel _instance = SearchTabViewModel._();
 

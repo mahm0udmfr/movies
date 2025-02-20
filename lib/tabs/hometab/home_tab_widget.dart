@@ -74,7 +74,7 @@ class HomeTabWidgetState extends State<HomeTabWidget> {
                       
                       MovieDetailsViewModel.instance.getMovieById(
                           widget.availableNowList[itemIndex].id!.toString());
-                            
+                            print(widget.availableNowList[itemIndex].id!.toString());
                       Navigator.of(context).pushNamed(
                         MovieDetailsScreen.routeName,
                       );
