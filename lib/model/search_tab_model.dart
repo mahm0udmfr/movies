@@ -1,11 +1,11 @@
-class MovieDetailsModel {
+class SearchTabModel {
   String? status;
   String? statusMessage;
   Data? data;
 
-  MovieDetailsModel({this.status, this.statusMessage, this.data});
+  SearchTabModel({this.status, this.statusMessage, this.data});
 
-  MovieDetailsModel.fromJson(Map<String, dynamic> json) {
+  SearchTabModel.fromJson(Map<String, dynamic> json) {
     if (json["status"] is String) {
       status = json["status"];
     }
@@ -17,8 +17,8 @@ class MovieDetailsModel {
     }
   }
 
-  static List<MovieDetailsModel> fromList(List<Map<String, dynamic>> list) {
-    return list.map(MovieDetailsModel.fromJson).toList();
+  static List<SearchTabModel> fromList(List<Map<String, dynamic>> list) {
+    return list.map(SearchTabModel.fromJson).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -28,19 +28,33 @@ class MovieDetailsModel {
     if (data != null) {
       _data["data"] = data?.toJson();
     }
+
     return _data;
   }
 }
 
 class Data {
-  MovieDetails? movieDetails;
+  int? movieCount;
+  int? limit;
+  int? pageNumber;
+  List<MoviesSearch>? movies;
 
-  Data({this.movieDetails});
+  Data({this.movieCount, this.limit, this.pageNumber, this.movies});
 
   Data.fromJson(Map<String, dynamic> json) {
-    if (json["movie"] is Map) {
-      movieDetails =
-          json["movie"] == null ? null : MovieDetails.fromJson(json["movie"]);
+    if (json["movie_count"] is int) {
+      movieCount = json["movie_count"];
+    }
+    if (json["limit"] is int) {
+      limit = json["limit"];
+    }
+    if (json["page_number"] is int) {
+      pageNumber = json["page_number"];
+    }
+    if (json["movies"] is List) {
+      movies = json["movies"] == null
+          ? null
+          : (json["movies"] as List).map((e) => MoviesSearch.fromJson(e)).toList();
     }
   }
 
@@ -50,14 +64,17 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
-    if (movieDetails != null) {
-      _data["movie"] = movieDetails?.toJson();
+    _data["movie_count"] = movieCount;
+    _data["limit"] = limit;
+    _data["page_number"] = pageNumber;
+    if (movies != null) {
+      _data["movies"] = movies?.map((e) => e.toJson()).toList();
     }
     return _data;
   }
 }
 
-class MovieDetails {
+class MoviesSearch {
   int? id;
   String? url;
   String? imdbCode;
@@ -66,12 +83,12 @@ class MovieDetails {
   String? titleLong;
   String? slug;
   int? year;
-  int? rating;
+  double? rating;
   int? runtime;
   List<String>? genres;
-  int? likeCount;
-  String? descriptionIntro;
+  String? summary;
   String? descriptionFull;
+  String? synopsis;
   String? ytTrailerCode;
   String? language;
   String? mpaRating;
@@ -80,18 +97,12 @@ class MovieDetails {
   String? smallCoverImage;
   String? mediumCoverImage;
   String? largeCoverImage;
-  String? mediumScreenshotImage1;
-  String? mediumScreenshotImage2;
-  String? mediumScreenshotImage3;
-  String? largeScreenshotImage1;
-  String? largeScreenshotImage2;
-  String? largeScreenshotImage3;
-  List<Cast>? cast;
+  String? state;
   List<Torrents>? torrents;
   String? dateUploaded;
   int? dateUploadedUnix;
 
-  MovieDetails(
+  MoviesSearch(
       {this.id,
       this.url,
       this.imdbCode,
@@ -103,9 +114,9 @@ class MovieDetails {
       this.rating,
       this.runtime,
       this.genres,
-      this.likeCount,
-      this.descriptionIntro,
+      this.summary,
       this.descriptionFull,
+      this.synopsis,
       this.ytTrailerCode,
       this.language,
       this.mpaRating,
@@ -114,18 +125,12 @@ class MovieDetails {
       this.smallCoverImage,
       this.mediumCoverImage,
       this.largeCoverImage,
-      this.mediumScreenshotImage1,
-      this.mediumScreenshotImage2,
-      this.mediumScreenshotImage3,
-      this.largeScreenshotImage1,
-      this.largeScreenshotImage2,
-      this.largeScreenshotImage3,
-      this.cast,
+      this.state,
       this.torrents,
       this.dateUploaded,
       this.dateUploadedUnix});
 
-  MovieDetails.fromJson(Map<String, dynamic> json) {
+  MoviesSearch.fromJson(Map<String, dynamic> json) {
     if (json["id"] is int) {
       id = json["id"];
     }
@@ -150,7 +155,7 @@ class MovieDetails {
     if (json["year"] is int) {
       year = json["year"];
     }
-    if (json["rating"] is int) {
+    if (json["rating"] is double) {
       rating = json["rating"];
     }
     if (json["runtime"] is int) {
@@ -160,14 +165,14 @@ class MovieDetails {
       genres =
           json["genres"] == null ? null : List<String>.from(json["genres"]);
     }
-    if (json["like_count"] is int) {
-      likeCount = json["like_count"];
-    }
-    if (json["description_intro"] is String) {
-      descriptionIntro = json["description_intro"];
+    if (json["summary"] is String) {
+      summary = json["summary"];
     }
     if (json["description_full"] is String) {
       descriptionFull = json["description_full"];
+    }
+    if (json["synopsis"] is String) {
+      synopsis = json["synopsis"];
     }
     if (json["yt_trailer_code"] is String) {
       ytTrailerCode = json["yt_trailer_code"];
@@ -193,28 +198,8 @@ class MovieDetails {
     if (json["large_cover_image"] is String) {
       largeCoverImage = json["large_cover_image"];
     }
-    if (json["medium_screenshot_image1"] is String) {
-      mediumScreenshotImage1 = json["medium_screenshot_image1"];
-    }
-    if (json["medium_screenshot_image2"] is String) {
-      mediumScreenshotImage2 = json["medium_screenshot_image2"];
-    }
-    if (json["medium_screenshot_image3"] is String) {
-      mediumScreenshotImage3 = json["medium_screenshot_image3"];
-    }
-    if (json["large_screenshot_image1"] is String) {
-      largeScreenshotImage1 = json["large_screenshot_image1"];
-    }
-    if (json["large_screenshot_image2"] is String) {
-      largeScreenshotImage2 = json["large_screenshot_image2"];
-    }
-    if (json["large_screenshot_image3"] is String) {
-      largeScreenshotImage3 = json["large_screenshot_image3"];
-    }
-    if (json["cast"] is List) {
-      cast = json["cast"] == null
-          ? null
-          : (json["cast"] as List).map((e) => Cast.fromJson(e)).toList();
+    if (json["state"] is String) {
+      state = json["state"];
     }
     if (json["torrents"] is List) {
       torrents = json["torrents"] == null
@@ -231,8 +216,8 @@ class MovieDetails {
     }
   }
 
-  static List<MovieDetails> fromList(List<Map<String, dynamic>> list) {
-    return list.map(MovieDetails.fromJson).toList();
+  static List<MoviesSearch> fromList(List<Map<String, dynamic>> list) {
+    return list.map(MoviesSearch.fromJson).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -250,9 +235,9 @@ class MovieDetails {
     if (genres != null) {
       _data["genres"] = genres;
     }
-    _data["like_count"] = likeCount;
-    _data["description_intro"] = descriptionIntro;
+    _data["summary"] = summary;
     _data["description_full"] = descriptionFull;
+    _data["synopsis"] = synopsis;
     _data["yt_trailer_code"] = ytTrailerCode;
     _data["language"] = language;
     _data["mpa_rating"] = mpaRating;
@@ -261,15 +246,7 @@ class MovieDetails {
     _data["small_cover_image"] = smallCoverImage;
     _data["medium_cover_image"] = mediumCoverImage;
     _data["large_cover_image"] = largeCoverImage;
-    _data["medium_screenshot_image1"] = mediumScreenshotImage1;
-    _data["medium_screenshot_image2"] = mediumScreenshotImage2;
-    _data["medium_screenshot_image3"] = mediumScreenshotImage3;
-    _data["large_screenshot_image1"] = largeScreenshotImage1;
-    _data["large_screenshot_image2"] = largeScreenshotImage2;
-    _data["large_screenshot_image3"] = largeScreenshotImage3;
-    if (cast != null) {
-      _data["cast"] = cast?.map((e) => e.toJson()).toList();
-    }
+    _data["state"] = state;
     if (torrents != null) {
       _data["torrents"] = torrents?.map((e) => e.toJson()).toList();
     }
@@ -376,43 +353,6 @@ class Torrents {
     _data["size_bytes"] = sizeBytes;
     _data["date_uploaded"] = dateUploaded;
     _data["date_uploaded_unix"] = dateUploadedUnix;
-    return _data;
-  }
-}
-
-class Cast {
-  String? name;
-  String? characterName;
-  String? imdbCode;
-  String? urlSmallImage;
-
-  Cast({this.name, this.characterName, this.imdbCode, this.urlSmallImage});
-
-  Cast.fromJson(Map<String, dynamic> json) {
-    if (json["name"] is String) {
-      name = json["name"];
-    }
-    if (json["character_name"] is String) {
-      characterName = json["character_name"];
-    }
-    if (json["imdb_code"] is String) {
-      imdbCode = json["imdb_code"];
-    }
-    if (json["url_small_image"] is String) {
-      urlSmallImage = json["url_small_image"];
-    }
-  }
-
-  static List<Cast> fromList(List<Map<String, dynamic>> list) {
-    return list.map(Cast.fromJson).toList();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["name"] = name;
-    _data["character_name"] = characterName;
-    _data["imdb_code"] = imdbCode;
-    _data["url_small_image"] = urlSmallImage;
     return _data;
   }
 }

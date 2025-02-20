@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget? suffixIcon;
   TextStyle? hintStyle;
   TextStyle? style;
+  void Function(String)? onChanged;
   bool obscureText;
   int? maxLines;
   Color? filledColor;
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       this.prefixIcon,
       this.suffixIcon,
       this.style,
+      this.onChanged,
       this.obscureText = false,
       this.maxLines,
       this.validator,
@@ -36,6 +38,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       controller: controller,
       validator: validator,
       maxLines: maxLines,

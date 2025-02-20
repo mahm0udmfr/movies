@@ -35,9 +35,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             child: BlocBuilder<MovieDetailsViewModel, MovieState>(
           bloc: viewModel,
           buildWhen: (previous, current) =>
-              current is AvailableNowSuccessState  &&
+              current is AvailableNowSuccessState &&
               previous is! SuggestionsSuccessState,
-
           builder: (context, state) {
             if (state is AvailableNowLoadingState) {
               return Center(
