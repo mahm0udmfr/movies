@@ -28,7 +28,7 @@ class ApiService {
         response = await http.get(url, headers: headers);
       }
 
-      if (response.statusCode == 200) {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         return jsonDecode(response.body);
       } else {
         return Future.error("Error: ${response.statusCode} - ${response.body}");

@@ -7,4 +7,5 @@ class EndPoints {
   static const String resetPassword = "/auth/reset-password";
   static const String suggestions = "/api/v2/movie_suggestions.json";
   static const String allFavorites = "/favorites/all";
+  static const String addToFavorites = "/favorites/add";
 }
