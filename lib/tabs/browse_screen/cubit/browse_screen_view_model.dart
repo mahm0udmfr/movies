@@ -38,8 +38,8 @@ class BrowseScreenViewModel extends Cubit<BrowseScreenStates> {
     }
   }
 
-  Future changeCategoryIndex(int index) async {
-    emit(BrowseChangeCategory(selectedIndex: index)); // Emitting first
-    await getMoviesByCategoryName(movieCategories[index]); // Await the API call
-  }
+Future changeCategoryIndex(int index) async {
+  await getMoviesByCategoryName(movieCategories[index]); 
+  emit(BrowseChangeCategory(selectedIndex: index));
+}
 }

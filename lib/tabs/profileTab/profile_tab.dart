@@ -144,6 +144,7 @@ class _ProfileTabState extends State<ProfileTab>
                                   backgroundColor: AppColor.red,
                                   center: true,
                                   onPressed: () {
+                                    MyServices.removeData(key: "Token");
                                     Navigator.of(context).pushReplacementNamed(
                                         LoginScreen.routeName);
                                   },

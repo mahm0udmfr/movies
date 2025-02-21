@@ -14,7 +14,6 @@ import 'package:movies/tabs/movie_details/movie_details.dart';
 import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/utils/apptheme.dart';
 import 'package:movies/utils/bloc_observer.dart';
-
 import 'Auth/Login/loginscreen.dart';
 import 'Auth/register/register_screen.dart';
 
@@ -54,11 +53,12 @@ class MyApp extends StatelessWidget {
               ProfileTab.routename: (context) => ProfileTab(),
               MovieDetailsScreen.routeName: (context) => MovieDetailsScreen(),
             },
-              initialRoute: 
-              MyServices.getString("step") == "1"
-                  ? MyServices.getString("token") == null ? LoginScreen.routeName : HomeScreen.routename
-                  : OnBoarding.routename,
-              );
+            initialRoute: MyServices.getString("step") == "1"
+                ? MyServices.getString("Token") == null
+                    ? LoginScreen.routeName
+                    : HomeScreen.routename
+                : OnBoarding.routename,
+          );
         },
       ),
     );
