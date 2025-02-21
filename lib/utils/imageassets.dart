@@ -45,4 +45,5 @@ class ImageAssets {
   static const String movieRate = "assets/images/movie_rate.png";
   static const String screenShot = "assets/images/large-screenshot1.png";
   static const String castImage = "assets/images/cast_image.png";
+  static const String emptyListProfile = "assets/images/EmptyWatchList.png";
 }
