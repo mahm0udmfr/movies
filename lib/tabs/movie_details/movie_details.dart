@@ -11,6 +11,7 @@ import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   static const String routeName = "Movie_details";
@@ -111,7 +112,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               ),
                             ),
                             SizedBox(height: screenSize.height * .14),
-                            Image.asset(ImageAssets.moviePlay),
+                            InkWell(
+                                onTap: () {
+                                  launchInAppWithBrowserOptions(
+                                      Uri.parse(state.movieDetails.url ?? ""));
+                                },
+                                child: Image.asset(ImageAssets.moviePlay)),
                             Spacer(),
                             Text(
                               state.movieDetails.titleLong ?? "",
@@ -138,7 +144,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             textStyle: AppStyles.bold20white,
                             text: "Watch",
                             center: true,
-                            onPressed: () {}),
+                            onPressed: () {
+                              launchInAppWithBrowserOptions(
+                                  Uri.parse(state.movieDetails.url ?? ""));
+                            }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -257,6 +266,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       title,
       style: AppStyles.bold24White,
     );
+  }
+
+  Future<void> launchInAppWithBrowserOptions(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.inAppBrowserView,
+      browserConfiguration: const BrowserConfiguration(showTitle: true),
+    )) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   Widget movieScreenShots(String screenShotUrl) {

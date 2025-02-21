@@ -42,7 +42,8 @@ class ApiManager {
     }
   }
 
-  static Future<MovieDetailsModel?> getMovieDetail({required String movieId}) async {
+  static Future<MovieDetailsModel?> getMovieDetail(
+      {required String movieId}) async {
     Uri url = Uri.https(
       ApiConstant.moviesBaseUrl,
       EndPoints.moviedetails,
@@ -71,7 +72,8 @@ class ApiManager {
     }
   }
 
-  static Future<LoginModel?> loginByEmailAndPassword(String userEmail, String userPassword) async {
+  static Future<LoginModel?> loginByEmailAndPassword(
+      String userEmail, String userPassword) async {
     Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.login);
     Map<String, dynamic> requestBody = {
       "email": userEmail,
@@ -185,7 +187,7 @@ class ApiManager {
     required String newPass,
   }) async {
     try {
-      String? token = MyServices.getString("Token"); 
+      String? token = MyServices.getString("Token");
       if (token == null) {
         return Future.error("Token not found");
       }
@@ -209,8 +211,10 @@ class ApiManager {
     }
   }
 
-  static Future<SuggestionResponse?> suggestions({required String movieId}) async {
-    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.suggestions, {'movie_id': movieId});
+  static Future<SuggestionResponse?> suggestions(
+      {required String movieId}) async {
+    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.suggestions,
+        {'movie_id': movieId});
     try {
       var jsonResponse = await ApiService.makeRequest(url: url);
       return SuggestionResponse.fromJson(jsonResponse);
@@ -244,4 +248,31 @@ class ApiManager {
       return null;
     }
   }
+
+  static Future<GetAllFavorites?> addMovieToFavorites(
+      String movieId, String name, String rating, String imageURL, String year) async {
+    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.addToFavorites);
+    Map<String, dynamic> requestBody = {
+      "movieId": movieId,
+      "name": name,
+      "rating": rating,
+      "imageURL": imageURL,
+      "year": year,
+    };
+
+    try {
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: requestBody,
+      );
+      return GetAllFavorites.fromJson(jsonResponse);
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+
 }
