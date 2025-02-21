@@ -38,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: BlocProvider(
@@ -119,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
                         textStyle: AppStyles.regular20RobotoBlack,
                         backgroundColor: AppColor.orange,
                       ),
+                      SizedBox(height: height * 0.02),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
@@ -135,12 +137,41 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
                               ),
                               TextSpan(
                                 text: AppLocalizations.of(context)!.create_one,
-                                style: AppStyles.bold20Orange,
+                                style: AppStyles.regular20Orange,
                               ),
                             ],
                           ),
                         ),
                       ),
+                      SizedBox(height: height * 0.02),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: width * .085),
+                        child: Row(
+                          children: [
+                            const Expanded(
+                                child: Divider(
+                              thickness: 2,
+                              endIndent: 20,
+                              color: AppColor.orange,
+                            )),
+                            Text(
+                              AppLocalizations.of(context)!.or,
+                              style: AppStyles.regular14Orange,
+                            ),
+                            const Expanded(
+                                child: Divider(
+                                    thickness: 2,
+                                    indent: 20,
+                                    color: AppColor.orange)),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      CustomElevatedButton(
+                          prefixIconButton: Image.asset(ImageAssets.iconGoogle),
+                          text: AppLocalizations.of(context)!.login_with_google,
+                          center: true,
+                          onPressed: () {}),
                       SizedBox(height: height * 0.02),
                       ToggleSwitch(
                         customWidgets: [
