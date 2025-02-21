@@ -90,7 +90,8 @@ class _ProfileTabState extends State<ProfileTab>
                               Column(
                                 children: [
                                   Text(
-                                    "12",
+                                    watchListViewModel.allFavoritesList!.length
+                                        .toString(),
                                     style: AppStyles.bold24White,
                                   ),
                                   Text(
@@ -203,6 +204,13 @@ class _ProfileTabState extends State<ProfileTab>
                               } else if (state is WatchListErrorState) {
                                 return Center(child: Text(state.errorMessage));
                               } else if (state is WatchListSuccessState) {
+                                if (watchListViewModel
+                                    .allFavoritesList!.isEmpty) {
+                                  return Center(
+                                    child: Image.asset(
+                                        ImageAssets.emptyListProfile),
+                                  );
+                                }
                                 return GridView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
