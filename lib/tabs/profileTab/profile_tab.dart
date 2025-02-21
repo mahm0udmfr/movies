@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/Auth/Login/loginscreen.dart';
 import 'package:movies/profile/updateprofile.dart';
+import 'package:movies/services.dart';
 import 'package:movies/tabs/profileTab/cubit/profile_tab_state.dart';
 import 'package:movies/tabs/profileTab/cubit/profile_tab_view_model.dart';
 import 'package:movies/utils/app_styles.dart';
@@ -11,21 +12,36 @@ import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
 
 import '../browse_screen/movies_list.dart';
+import 'cubit/watch_List_state.dart';
+import 'cubit/watch_list_view_model.dart';
 
 class ProfileTab extends StatefulWidget {
-   static const String routename = "profileTab";
+  static const String routename = "profileTab";
   const ProfileTab({super.key});
 
   @override
   State<ProfileTab> createState() => _ProfileTabState();
 }
 
-class _ProfileTabState extends State<ProfileTab> {
+class _ProfileTabState extends State<ProfileTab>
+    with SingleTickerProviderStateMixin {
   ProfileTabViewModel viewModel = ProfileTabViewModel();
+  WatchListViewModel watchListViewModel = WatchListViewModel();
+  late TabController _tabController;
+
   @override
   void initState() {
     super.initState();
     viewModel.getUserData();
+    watchListViewModel.getAllFavoriteMovies(
+        token: MyServices.getString("Token")!);
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -74,11 +90,12 @@ class _ProfileTabState extends State<ProfileTab> {
                               Column(
                                 children: [
                                   Text(
-                                    "12",
+                                    watchListViewModel.allFavoritesList!.length
+                                        .toString(),
                                     style: AppStyles.bold24White,
                                   ),
                                   Text(
-                                    "Wish List",
+                                    AppLocalizations.of(context)!.watch_list,
                                     style: AppStyles.bold24White,
                                   ),
                                 ],
@@ -127,32 +144,9 @@ class _ProfileTabState extends State<ProfileTab> {
                                   backgroundColor: AppColor.red,
                                   center: true,
                                   onPressed: () {
-                                      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+                                    Navigator.of(context).pushReplacementNamed(
+                                        LoginScreen.routeName);
                                   },
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Column(
-                                  children: [
-                                    Image.asset(ImageAssets.watchListIcon,
-                                        width: width * 0.2),
-                                    SizedBox(height: height * 0.01),
-                                    Text("Watch List",
-                                        style: AppStyles.regular20RobotoWhite),
-                                  ],
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Column(
-                                  children: [
-                                    Image.asset(ImageAssets.historyIcon,
-                                        width: width * 0.1),
-                                    SizedBox(height: height * 0.01),
-                                    Text(AppLocalizations.of(context)!.history,
-                                        style: AppStyles.regular20RobotoWhite),
-                                  ],
                                 ),
                               ),
                             ],
@@ -161,19 +155,108 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
                     SizedBox(height: height * 0.02),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 7,
-                        mainAxisSpacing: 7,
-                        childAspectRatio: 0.7,
+                    TabBar(
+                      dividerColor: AppColor.transparent,
+                      indicatorColor: AppColor.orange,
+                      controller: _tabController,
+                      tabs: [
+                        Tab(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(ImageAssets.watchListIcon,
+                                  width: width * 0.05),
+                              SizedBox(height: height * 0.01),
+                              Text(
+                                AppLocalizations.of(context)!.watch_list,
+                                style: AppStyles.regular14RobotoWhite,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Tab(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(ImageAssets.historyIcon,
+                                  width: width * 0.05),
+                              SizedBox(height: height * 0.006),
+                              Text(
+                                AppLocalizations.of(context)!.history,
+                                style: AppStyles.regular14RobotoWhite,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: height * 0.6,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          BlocBuilder<WatchListViewModel, WatchListState>(
+                            bloc: watchListViewModel,
+                            builder: (context, state) {
+                              if (state is WatchListLoadingState) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else if (state is WatchListErrorState) {
+                                return Center(child: Text(state.errorMessage));
+                              } else if (state is WatchListSuccessState) {
+                                if (watchListViewModel
+                                    .allFavoritesList!.isEmpty) {
+                                  return Center(
+                                    child: Image.asset(
+                                        ImageAssets.emptyListProfile),
+                                  );
+                                }
+                                return GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 7,
+                                    mainAxisSpacing: 7,
+                                    childAspectRatio: 0.7,
+                                  ),
+                                  itemCount: watchListViewModel
+                                      .allFavoritesList!.length,
+                                  itemBuilder: (context, index) {
+                                    return Movieslist(
+                                      name: watchListViewModel
+                                          .allFavoritesList![index].name,
+                                      imagePath: watchListViewModel
+                                          .allFavoritesList![index].imageURL,
+                                      rating: watchListViewModel
+                                          .allFavoritesList![index].rating
+                                          .toString(),
+                                    );
+                                  },
+                                );
+                              }
+                              return Center(
+                                  child: Text("No favorite movies available"));
+                            },
+                          ),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 7,
+                              mainAxisSpacing: 7,
+                              childAspectRatio: 0.7,
+                            ),
+                            itemCount: 5,
+                            itemBuilder: (context, index) {
+                              return Movieslist();
+                            },
+                          ),
+                        ],
                       ),
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Movieslist();
-                      },
                     ),
                   ],
                 ),
