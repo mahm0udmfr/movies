@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:movies/tabs/browse_screen/movies_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/tabs/browse_screen/cubit/browse_screen_states.dart';
+import 'package:movies/tabs/browse_screen/cubit/browse_screen_view_model.dart';
 import 'package:movies/tabs/browse_screen/movies_category_widget.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
+
+import '../hometab/movie_widget.dart';
+import '../movie_details/cubit/movie_details_view_model.dart';
+import '../movie_details/movie_details.dart';
 
 class BrowseScreen extends StatefulWidget {
   const BrowseScreen({super.key});
@@ -14,19 +19,12 @@ class BrowseScreen extends StatefulWidget {
 }
 
 class _BrowseScreenState extends State<BrowseScreen> {
-  int selectedIndex = 0;
+  BrowseScreenViewModel viewModel = BrowseScreenViewModel();
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    List<String> movieCategories = [
-      AppLocalizations.of(context)!.action,
-      AppLocalizations.of(context)!.adventure,
-      AppLocalizations.of(context)!.horror,
-      AppLocalizations.of(context)!.fantasy,
-      AppLocalizations.of(context)!.sci_fi,
-      AppLocalizations.of(context)!.animation,
-    ];
+
     return Scaffold(
       body: Column(
         children: [
@@ -41,31 +39,74 @@ class _BrowseScreenState extends State<BrowseScreen> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    selectedIndex = index;
-                    setState(() {});
+                    viewModel.changeCategoryIndex(index);
                   },
-                  child: MoviesCategoryWidget(
-                      categoryName: movieCategories[index],
-                      isSelected: selectedIndex == index,
-                      backgroundColor: AppColor.orange,
-                      textSelectedStyle: AppStyles.bold20Black,
-                      textUnSelectedStyle: AppStyles.bold20Orange),
+                  child: BlocBuilder(
+                    buildWhen: (previous, current) =>
+                        current is BrowseChangeCategory ||
+                        current is BrowseSuccessState,
+                    bloc: viewModel,
+                    builder: (context, state) {
+                      if (state is BrowseChangeCategory) {
+                        return MoviesCategoryWidget(
+                            categoryName: viewModel.movieCategories[index],
+                            isSelected: state.selectedIndex == index,
+                            backgroundColor: AppColor.orange,
+                            textSelectedStyle: AppStyles.bold20Black,
+                            textUnSelectedStyle: AppStyles.bold20Orange);
+                      }
+                      return Container();
+                    },
+                  ),
                 );
               },
-              itemCount: movieCategories.length,
+              itemCount: viewModel.movieCategories.length,
             ),
           ),
           SizedBox(
             height: screenSize.height * .02,
           ),
-          Expanded(
-            child: GridView.builder(
-                padding: EdgeInsets.zero,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemBuilder: (context, index) {
-                  return Movieslist();
-                }),
+          BlocBuilder(
+            bloc: viewModel,
+            builder: (context, state) {
+              if (state is BrowseInitialState || state is BrowseLoadingState) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: AppColor.grey,
+                  ),
+                );
+              } else if (state is BrowseSuccessState) {
+                return Expanded(
+                    child: GridView.builder(
+                        itemCount: viewModel.moviesList.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 2 / 3,
+                            mainAxisSpacing: 10),
+                        itemBuilder: (context, index) {
+                          return MovieWidget(
+                            onTap: () {
+                              MovieDetailsViewModel.instance.getMovieById(
+                                  viewModel.moviesList[index].id!.toString());
+                              Navigator.of(context)
+                                  .pushNamed(MovieDetailsScreen.routeName);
+                            },
+                            imageUrl:
+                                viewModel.moviesList[index].largeCoverImage ??
+                                    "",
+                            ratingText:
+                                viewModel.moviesList[index].rating.toString(),
+                          );
+                        }));
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: AppColor.grey,
+                  ),
+                );
+              }
+            },
           )
         ],
       ),
