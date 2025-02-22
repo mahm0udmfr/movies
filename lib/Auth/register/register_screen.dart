@@ -215,15 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                               ))
                         ],
                       ),
-                      // InkWell(
-                      //   onTap: (){},
-                      //   child: Text.rich(TextSpan(
-                      //     children: [
-                      //       TextSpan(text: "Already Have Account ?" ,style: AppStyles.regular14RobotoWhite, ),
-                      //       TextSpan(text: "Login",style: AppStyles.regular14Orange,)
-                      //     ]
-                      //   )),
-                      // ),
+    
                       Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),

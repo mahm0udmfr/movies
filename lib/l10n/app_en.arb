@@ -39,5 +39,7 @@
   "edit_profile": "Edit Profile",
   "exit": "Exit",
   "new_password": "New Password",
-  "password_updated_successfully": "Password updated successfully"
+  "password_updated_successfully": "Password updated successfully",
+  "loginByGoogle": "login By Google",
+    "or":"OR"
 }

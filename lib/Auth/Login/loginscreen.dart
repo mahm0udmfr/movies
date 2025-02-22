@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: BlocProvider(
         create: (context) => viewModel,
@@ -119,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
                         textStyle: AppStyles.regular20RobotoBlack,
                         backgroundColor: AppColor.orange,
                       ),
+                      SizedBox(height: height * 0.02),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
@@ -140,6 +141,36 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
                             ],
                           ),
                         ),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Divider(
+                            color: AppColor.orange,
+                            endIndent: width * 0.02,
+                            indent: width * 0.2,
+                          )),
+                          Text(
+                            AppLocalizations.of(context)!.or,
+                            style: AppStyles.regular16RobotoOrange,
+                          ),
+                          Expanded(
+                              child: Divider(
+                            color: AppColor.orange,
+                            endIndent: width * 0.2,
+                            indent: width * 0.02,
+                          )),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.02),
+                      CustomElevatedButton(
+                        prefixIconButton: Image.asset(ImageAssets.iconGoogle),
+                        text: AppLocalizations.of(context)!.loginByGoogle,
+                        center: true,
+                        onPressed: () => viewModel.loginWithGoogle(),
+                        textStyle: AppStyles.regular20RobotoBlack,
+                        backgroundColor: AppColor.orange,
                       ),
                       SizedBox(height: height * 0.02),
                       ToggleSwitch(
