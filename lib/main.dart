@@ -10,6 +10,7 @@ import 'package:movies/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
+import 'package:movies/tabs/hometab/cubit/ListCategoryCubit.dart';
 import 'package:movies/tabs/hometab/home_tab.dart';
 import 'package:movies/tabs/movie_details/movie_details.dart';
 import 'package:movies/tabs/profileTab/cubit/history_view_model.dart';
@@ -31,14 +32,16 @@ void main() async {
   Hive.registerAdapter(MovieDetailsAdapter());
   Hive.init(directory.path);
   await MyServices.init();
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => HistoryViewModel()),
-        BlocProvider(create: (_) => ProfileTabViewModel()),
-      ],
-      child: MyApp(),
-    ),
+
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => HistoryViewModel()),
+      BlocProvider(create: (_) => ProfileTabViewModel()),
+      BlocProvider(create: (_) => ListCategoryViewModel()),
+    ],
+    child: MyApp(),
+  ),
+
   );
 }
 
