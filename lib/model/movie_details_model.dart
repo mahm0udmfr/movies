@@ -1,3 +1,6 @@
+
+import 'package:hive/hive.dart';
+part 'movie_details_model.g.dart';
 class MovieDetailsModel {
   String? status;
   String? statusMessage;
@@ -57,15 +60,20 @@ class Data {
   }
 }
 
-class MovieDetails {
+@HiveType(typeId: 0)
+class MovieDetails extends HiveObject{
+  @HiveField(0)
   int? id;
   String? url;
   String? imdbCode;
+  @HiveField(1)
   String? title;
   String? titleEnglish;
   String? titleLong;
   String? slug;
+  @HiveField(4)
   int? year;
+  @HiveField(5)
   int? rating;
   int? runtime;
   List<String>? genres;
@@ -79,6 +87,7 @@ class MovieDetails {
   String? backgroundImageOriginal;
   String? smallCoverImage;
   String? mediumCoverImage;
+  @HiveField(2)
   String? largeCoverImage;
   String? mediumScreenshotImage1;
   String? mediumScreenshotImage2;
@@ -91,7 +100,7 @@ class MovieDetails {
   String? dateUploaded;
   int? dateUploadedUnix;
 
-  MovieDetails(
+  MovieDetails (
       {this.id,
       this.url,
       this.imdbCode,

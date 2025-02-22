@@ -120,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
                         backgroundColor: AppColor.orange,
                       ),
                       SizedBox(height: height * 0.02),
+                      SizedBox(height: height * 0.02),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
@@ -136,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> implements LoginInterface {
                               ),
                               TextSpan(
                                 text: AppLocalizations.of(context)!.create_one,
-                                style: AppStyles.bold20Orange,
+                                style: AppStyles.regular20Orange,
                               ),
                             ],
                           ),

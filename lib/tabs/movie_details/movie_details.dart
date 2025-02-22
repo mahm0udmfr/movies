@@ -7,11 +7,14 @@ import 'package:movies/tabs/movie_details/cubit/movie_details_state.dart';
 import 'package:movies/tabs/movie_details/cubit/movie_details_view_model.dart';
 import 'package:movies/tabs/movie_details/favorite_date_time.dart';
 import 'package:movies/tabs/movie_details/movies_category.dart';
+import 'package:movies/tabs/profileTab/cubit/history_view_model.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../model/movie_details_model.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   static const String routeName = "Movie_details";
@@ -147,6 +150,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             onPressed: () {
                               launchInAppWithBrowserOptions(
                                   Uri.parse(state.movieDetails.url ?? ""));
+                              List<MovieDetails> moviesList = [state.movieDetails];
+                              context.read<HistoryViewModel>().saveMovies(moviesList);
+
                             }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
