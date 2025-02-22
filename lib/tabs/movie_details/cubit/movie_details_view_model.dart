@@ -58,7 +58,6 @@ class MovieDetailsViewModel extends Cubit<MovieState> {
       var response = await ApiManager.addMovieToFavorites(
           movieId, name, rating, imageURL, year);
       if (response?.message == 'Added to favourite successfully') {
-        // checkIfFavorite(movieId);
         getMovieById(movieId);
       } else {
         emit(MovieIsFavoriteErrorState(
@@ -69,14 +68,11 @@ class MovieDetailsViewModel extends Cubit<MovieState> {
     }
   }
 
-
-void removeMovieFromFavorite(String movieId) async {
+  void removeMovieFromFavorite(String movieId) async {
     // emit(MovieIsFavoriteState(isFavorite: false));
     try {
-      var response = await ApiManager.removeMovieFromFavorites(
-          movieId);
+      var response = await ApiManager.removeMovieFromFavorites(movieId);
       if (response?.message == 'Removed from favourite successfully') {
-        // checkIfFavorite(movieId);
         getMovieById(movieId);
       } else {
         emit(MovieIsFavoriteErrorState(
@@ -86,8 +82,6 @@ void removeMovieFromFavorite(String movieId) async {
       emit(MovieIsFavoriteErrorState(errorMessage: e.toString()));
     }
   }
-
-
 
   Future<bool> checkIfFavorite(String movieId) async {
     emit(MovieIsFavoriteState(isFavorite: false)); // Emit loading state

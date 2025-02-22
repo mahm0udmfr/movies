@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies/services.dart';
 import 'package:movies/tabs/browse_screen/movies_list.dart';
 import 'package:movies/tabs/movie_details/actors_details.dart';
 import 'package:movies/tabs/movie_details/cubit/movie_details_state.dart';
@@ -8,12 +9,12 @@ import 'package:movies/tabs/movie_details/cubit/movie_details_view_model.dart';
 import 'package:movies/tabs/movie_details/favorite_date_time.dart';
 import 'package:movies/tabs/movie_details/movies_category.dart';
 import 'package:movies/tabs/profileTab/cubit/history_view_model.dart';
+import 'package:movies/tabs/profileTab/cubit/watch_list_view_model.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../model/movie_details_model.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
@@ -127,6 +128,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                                 .toString(),
                                             state.movieDetails.year.toString());
                                       }
+                                    WatchListViewModel().getAllFavoriteMovies(token: MyServices.getString("Token")!);
                                     },
                                     icon: FutureBuilder<bool>(
                                       future: viewModel.checkIfFavorite(
