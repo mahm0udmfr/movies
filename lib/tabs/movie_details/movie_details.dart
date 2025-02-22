@@ -7,6 +7,7 @@ import 'package:movies/tabs/movie_details/cubit/movie_details_state.dart';
 import 'package:movies/tabs/movie_details/cubit/movie_details_view_model.dart';
 import 'package:movies/tabs/movie_details/favorite_date_time.dart';
 import 'package:movies/tabs/movie_details/movies_category.dart';
+import 'package:movies/tabs/profileTab/cubit/history_view_model.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
@@ -147,6 +148,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             onPressed: () {
                               launchInAppWithBrowserOptions(
                                   Uri.parse(state.movieDetails.url ?? ""));
+                              HistoryViewModel historyViewModel = HistoryViewModel();
+                              historyViewModel.saveMovie(state.movieDetails);
+
                             }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
