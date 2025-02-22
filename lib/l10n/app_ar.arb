@@ -39,5 +39,7 @@
   "edit_profile": "تعديل الملف الشخصي",
   "exit": "خروج",
   "new_password": "كلمة المرور الجديدة",
-  "password_updated_successfully": "تم تغيير كلمة المرور بنجاح"
+  "password_updated_successfully": "تم تغيير كلمة المرور بنجاح",
+  "loginByGoogle": "تسجيل الدخول باستخدام جوجل",
+  "or":"او"
 }

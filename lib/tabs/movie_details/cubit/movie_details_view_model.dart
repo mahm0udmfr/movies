@@ -1,10 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:movies/model/movie_suggestions.dart';
 import 'package:movies/tabs/movie_details/cubit/movie_details_state.dart';
 import 'package:movies/utils/api_manager.dart';
-
-import '../../../model/movie_details_model.dart';
 
 class MovieDetailsViewModel extends Cubit<MovieState> {
   List<MoviesSuggestionSmall> suggestionMovies = [];

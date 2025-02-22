@@ -6,8 +6,6 @@ import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/tabs/searchTab/search_tab.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
