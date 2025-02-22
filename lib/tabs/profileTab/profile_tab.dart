@@ -14,7 +14,7 @@ import 'package:movies/widget/custom_elevated_button.dart';
 import '../browse_screen/movies_list.dart';
 import 'cubit/history_state.dart';
 import 'cubit/history_view_model.dart';
-import 'cubit/watch_List_state.dart';
+import 'cubit/watch_list_state.dart';
 import 'cubit/watch_list_view_model.dart';
 
 class ProfileTab extends StatefulWidget {

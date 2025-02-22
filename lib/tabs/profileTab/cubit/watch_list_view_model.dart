@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies/model/get_all_favorites_model.dart';
-import 'package:movies/tabs/profileTab/cubit/watch_List_state.dart';
+import 'package:movies/tabs/profileTab/cubit/watch_list_state.dart';
 import 'package:movies/utils/api_manager.dart';
 
 class WatchListViewModel extends Cubit<WatchListState> {

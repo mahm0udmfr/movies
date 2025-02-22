@@ -25,14 +25,14 @@ class MovieDetailsScreen extends StatefulWidget {
   State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
 }
 
-late Size screenSize;
+// late ;
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   MovieDetailsViewModel viewModel = MovieDetailsViewModel.instance;
 
   @override
   Widget build(BuildContext context) {
-    screenSize = MediaQuery.of(context).size;
+  Size   screenSize = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -170,11 +170,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                         titleText("Screen Shots"),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage1 ?? ""),
+                            state.movieDetails.largeScreenshotImage1 ?? "",screenSize),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage2 ?? ""),
+                            state.movieDetails.largeScreenshotImage2 ?? "",screenSize),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage3 ?? ""),
+                            state.movieDetails.largeScreenshotImage3 ?? "",screenSize),
                         titleText("Similar"),
                         BlocBuilder(
                             bloc: viewModel,
@@ -284,7 +284,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     }
   }
 
-  Widget movieScreenShots(String screenShotUrl) {
+  Widget movieScreenShots(String screenShotUrl,Size screenSize) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: CachedNetworkImage(

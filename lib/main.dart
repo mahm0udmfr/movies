@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/Auth/reset_password/reset_password_view.dart';
@@ -28,17 +27,18 @@ void main() async {
   await Hive.initFlutter();
 
   Bloc.observer = MyBlocObserver();
-  var directory =await getApplicationDocumentsDirectory();
+  var directory = await getApplicationDocumentsDirectory();
   Hive.registerAdapter(MovieDetailsAdapter());
   Hive.init(directory.path);
   await MyServices.init();
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (_) => HistoryViewModel()),
-      BlocProvider(create: (_) => ProfileTabViewModel()),
-    ],
-    child: MyApp(),
-  ),
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => HistoryViewModel()),
+        BlocProvider(create: (_) => ProfileTabViewModel()),
+      ],
+      child: MyApp(),
+    ),
   );
 }
 
@@ -48,13 +48,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-
       create: (context) => LanguageCubit(),
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
           var languageCubit = context.read<LanguageCubit>();
           return MaterialApp(
-
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             theme: Apptheme.darkTheme,
