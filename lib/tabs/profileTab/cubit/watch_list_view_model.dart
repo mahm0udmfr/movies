@@ -4,9 +4,12 @@ import 'package:movies/tabs/profileTab/cubit/watch_list_state.dart';
 import 'package:movies/utils/api_manager.dart';
 
 class WatchListViewModel extends Cubit<WatchListState> {
+  static final WatchListViewModel _instance = WatchListViewModel._internal();
   List<DataGetAllFavorites>? allFavoritesList = [];
 
-  WatchListViewModel() : super(WatchListLoadingState());
+  factory WatchListViewModel() => _instance;
+
+  WatchListViewModel._internal() : super(WatchListLoadingState());
 
   void getAllFavoriteMovies({required String token}) async {
     emit(WatchListLoadingState());
@@ -16,6 +19,7 @@ class WatchListViewModel extends Cubit<WatchListState> {
       if (response!.data!.isEmpty) {
         emit(WatchListEmptyState());
       } else {
+        allFavoritesList = [];
         allFavoritesList = response.data;
         print("${allFavoritesList!.length}");
         emit(WatchListSuccessState(response: response));

@@ -39,6 +39,7 @@ class ImageAssets {
   static const String historyIcon = "assets/images/historyicon.png";
   static const String moviePlay = "assets/images/Group 21.png";
   static const String saveMovie = "assets/images/Vector.png";
+    static const String isFavoriteTrue = "assets/images/isFavoriteTrue.png";
   static const String arrowBack = "assets/images/arrow_back.png";
   static const String yellowFavorite = "assets/images/yellow_favorite.png";
   static const String movieTime = "assets/images/movie_time.png";

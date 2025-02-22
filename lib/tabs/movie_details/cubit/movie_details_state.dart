@@ -29,3 +29,15 @@ class SuggestionsSuccessState extends MovieState {
 
   SuggestionsSuccessState({required this.suggestionResponse});
 }
+
+
+class MovieIsFavoriteState extends MovieState {
+  bool isFavorite = false;
+
+  MovieIsFavoriteState({required this.isFavorite});
+}
+
+class MovieIsFavoriteErrorState extends MovieState {
+    String errorMessage;
+  MovieIsFavoriteErrorState({required this.errorMessage});
+}

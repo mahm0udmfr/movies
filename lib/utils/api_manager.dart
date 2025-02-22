@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:movies/model/addtofavorite_model.dart';
 import 'package:movies/model/get_all_favorites_model.dart';
 import 'package:movies/model/home_tab_model.dart';
+import 'package:movies/model/is_favorite_model.dart';
 import 'package:movies/model/login_model.dart';
 import 'package:movies/model/movie_details_model.dart';
 import 'package:movies/model/movie_suggestions.dart';
@@ -249,30 +251,79 @@ class ApiManager {
     }
   }
 
-  static Future<GetAllFavorites?> addMovieToFavorites(
-      String movieId, String name, String rating, String imageURL, String year) async {
-    Uri url = Uri.https(ApiConstant.moviesBaseUrl, EndPoints.addToFavorites);
-    Map<String, dynamic> requestBody = {
-      "movieId": movieId,
-      "name": name,
-      "rating": rating,
-      "imageURL": imageURL,
-      "year": year,
-    };
-
+  static Future<AddtofavoriteModel?> addMovieToFavorites(String movieId,
+      String name, num rating, String imageURL, String year) async {
     try {
+      String? token = MyServices.getString("Token");
+      if (token == null) {
+        return Future.error("Token not found");
+      }
+
+      Uri url = Uri.https(ApiConstant.userBaseUrl, EndPoints.addToFavorites);
+      Map<String, dynamic> requestBody = {
+        "movieId": movieId,
+        "name": name,
+        "rating": rating,
+        "imageURL": imageURL,
+        "year": year
+      };
+
       var jsonResponse = await ApiService.makeRequest(
         url: url,
         method: "POST",
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json"
+        },
         body: requestBody,
       );
-      return GetAllFavorites.fromJson(jsonResponse);
+
+      return AddtofavoriteModel.fromJson(jsonResponse);
     } catch (e) {
+      print(e);
       return null;
     }
   }
 
+  static Future<AddtofavoriteModel?> removeMovieFromFavorites(
+    String movieId,
+  ) async {
+    try {
+      String? token = MyServices.getString("Token");
+      if (token == null) {
+        return Future.error("Token not found");
+      }
 
+      Uri url = Uri.https(
+          ApiConstant.userBaseUrl, EndPoints.removeFromFavorites + movieId);
 
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json"
+        },
+      );
+
+      return AddtofavoriteModel.fromJson(jsonResponse);
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  static Future<IsFavoriteModel?> checkIfMovieIsFavorite(String movieId) async {
+    Uri url =
+        Uri.https(ApiConstant.userBaseUrl, EndPoints.isFavorite + movieId);
+    try {
+      var jsonResponse = await ApiService.makeRequest(
+        url: url,
+        headers: {"Authorization": "Bearer ${MyServices.getString("Token")}"},
+      );
+      return IsFavoriteModel.fromJson(jsonResponse);
+    } catch (e) {
+      return null;
+    }
+  }
 }

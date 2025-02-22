@@ -4,14 +4,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:movies/Auth/Login/loginscreen.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
+import 'package:movies/tabs/hometab/movie_widget.dart';
+import 'package:movies/tabs/movie_details/cubit/movie_details_view_model.dart';
+import 'package:movies/tabs/movie_details/movie_details.dart';
 import 'package:movies/tabs/profileTab/cubit/profile_tab_state.dart';
 import 'package:movies/tabs/profileTab/cubit/profile_tab_view_model.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
-
-import '../browse_screen/movies_list.dart';
 import 'cubit/history_state.dart';
 import 'cubit/history_view_model.dart';
 import 'cubit/watch_list_state.dart';
@@ -70,14 +71,14 @@ class _ProfileTabState extends State<ProfileTab>
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.only(top: height * .05, bottom: height * .05),
                     color: AppColor.grey,
                     child: Column(
                       children: [
                         CircleAvatar(
                           radius: 50,
-                          backgroundImage: AssetImage(
-                              viewModel.avatarsList[viewModel.userData.avaterId ?? 0]),
+                          backgroundImage: AssetImage(viewModel
+                              .avatarsList[viewModel.userData.avaterId ?? 0]),
                         ),
                         SizedBox(height: 10),
                         Text(
@@ -91,7 +92,9 @@ class _ProfileTabState extends State<ProfileTab>
                             Column(
                               children: [
                                 Text(
-                                  watchListViewModel.allFavoritesList?.length.toString() ?? "0",
+                                  watchListViewModel.allFavoritesList?.length
+                                          .toString() ??
+                                      "0",
                                   style: AppStyles.bold24White,
                                 ),
                                 Text(
@@ -107,7 +110,8 @@ class _ProfileTabState extends State<ProfileTab>
                                   children: [
                                     Text(
                                       state is HistorySuccessState
-                                          ? state.historyMovies.length.toString()
+                                          ? state.historyMovies.length
+                                              .toString()
                                           : "0",
                                       style: AppStyles.bold24White,
                                     ),
@@ -130,7 +134,8 @@ class _ProfileTabState extends State<ProfileTab>
                             SizedBox(
                               width: width * 0.4,
                               child: CustomElevatedButton(
-                                text: AppLocalizations.of(context)!.edit_profile,
+                                text:
+                                    AppLocalizations.of(context)!.edit_profile,
                                 textStyle: AppStyles.regular20RobotoBlack,
                                 backgroundColor: AppColor.orange,
                                 center: true,
@@ -168,10 +173,12 @@ class _ProfileTabState extends State<ProfileTab>
                     controller: _tabController,
                     tabs: [
                       Tab(
+                        height: height * 0.09,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(ImageAssets.watchListIcon, width: width * 0.05),
+                            Image.asset(ImageAssets.watchListIcon,
+                                width: width * 0.05),
                             SizedBox(height: height * 0.01),
                             Text(
                               AppLocalizations.of(context)!.watch_list,
@@ -181,11 +188,15 @@ class _ProfileTabState extends State<ProfileTab>
                         ),
                       ),
                       Tab(
+                        height: height * 0.09,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(ImageAssets.historyIcon, width: width * 0.05),
-                            SizedBox(height: height * 0.006),
+                            Image.asset(
+                              ImageAssets.historyIcon,
+                              width: width * 0.05,
+                            ),
+                            SizedBox(height: height * 0.01),
                             Text(
                               AppLocalizations.of(context)!.history,
                               style: AppStyles.regular14RobotoWhite,
@@ -207,32 +218,48 @@ class _ProfileTabState extends State<ProfileTab>
                               return Center(child: CircularProgressIndicator());
                             } else if (state is WatchListErrorState) {
                               return Center(child: Text(state.errorMessage));
-                            } else if (watchListViewModel.allFavoritesList == null ||
+                            } else if (watchListViewModel.allFavoritesList ==
+                                    null ||
                                 watchListViewModel.allFavoritesList!.isEmpty) {
                               return Center(
-                                child: Image.asset(ImageAssets.emptyListProfile),
+                                child:
+                                    Image.asset(ImageAssets.emptyListProfile),
                               );
                             }
+              
+                            ///favorite
                             return GridView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 7,
-                                mainAxisSpacing: 7,
-                                childAspectRatio: 0.7,
-                              ),
-                              itemCount: watchListViewModel.allFavoritesList!.length,
-                              itemBuilder: (context, index) {
-                                return Movieslist(
-                                  name: watchListViewModel.allFavoritesList![index].name,
-                                  imagePath: watchListViewModel.allFavoritesList![index].imageURL,
-                                  rating: watchListViewModel.allFavoritesList![index].rating.toString(),
-                                );
-                              },
-                            );
+                                itemCount:
+                                    watchListViewModel.allFavoritesList!.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 10,
+                                        childAspectRatio: 2 / 3,
+                                        mainAxisSpacing: 10),
+                                itemBuilder: (context, index) {
+                                  return MovieWidget(
+                                    onTap: () {
+                                      MovieDetailsViewModel.instance
+                                          .getMovieById(watchListViewModel
+                                              .allFavoritesList![index].movieId!
+                                              .toString());
+                                      Navigator.of(context).pushNamed(
+                                          MovieDetailsScreen.routeName);
+                                    },
+                                    imageUrl: watchListViewModel
+                                            .allFavoritesList![index]
+                                            .imageURL ??
+                                        "",
+                                    ratingText: watchListViewModel
+                                        .allFavoritesList![index].rating
+                                        .toString(),
+                                  );
+                                });
                           },
                         ),
+              
+                        ///history
                         BlocBuilder<HistoryViewModel, HistoryState>(
                           bloc: context.read<HistoryViewModel>(),
                           builder: (context, state) {
@@ -242,26 +269,36 @@ class _ProfileTabState extends State<ProfileTab>
                               return Center(child: Text(state.errorMessage));
                             } else if (state is HistorySuccessState) {
                               if (state.historyMovies.isEmpty) {
-                                return Center(child: Image.asset(ImageAssets.emptyListProfile));
+                                return Center(
+                                    child: Image.asset(
+                                        ImageAssets.emptyListProfile));
                               } else {
                                 return GridView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 7,
-                                    mainAxisSpacing: 7,
-                                    childAspectRatio: 0.7,
-                                  ),
-                                  itemCount: state.historyMovies.length,
-                                  itemBuilder: (context, index) {
-                                    return Movieslist(
-                                      name: state.historyMovies[index].title!,
-                                      imagePath: state.historyMovies[index].largeCoverImage!,
-                                      rating: state.historyMovies[index].rating.toString(),
-                                    );
-                                  },
-                                );
+                                    itemCount: state.historyMovies.length,
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 10,
+                                            childAspectRatio: 2 / 3,
+                                            mainAxisSpacing: 10),
+                                    itemBuilder: (context, index) {
+                                      return MovieWidget(
+                                        onTap: () {
+                                          MovieDetailsViewModel.instance
+                                              .getMovieById(state
+                                                  .historyMovies[index].id!
+                                                  .toString());
+                                          Navigator.of(context).pushNamed(
+                                              MovieDetailsScreen.routeName);
+                                        },
+                                        imageUrl: state.historyMovies[index]
+                                                .largeCoverImage ??
+                                            "",
+                                        ratingText: state
+                                            .historyMovies[index].rating
+                                            .toString(),
+                                      );
+                                    });
                               }
                             }
                             return SizedBox();
