@@ -14,6 +14,8 @@ import 'package:movies/utils/imageassets.dart';
 import 'package:movies/widget/custom_elevated_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../model/movie_details_model.dart';
+
 class MovieDetailsScreen extends StatefulWidget {
   static const String routeName = "Movie_details";
 
@@ -148,8 +150,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             onPressed: () {
                               launchInAppWithBrowserOptions(
                                   Uri.parse(state.movieDetails.url ?? ""));
-                              HistoryViewModel historyViewModel = HistoryViewModel();
-                              historyViewModel.saveMovie(state.movieDetails);
+                              List<MovieDetails> moviesList = [state.movieDetails];
+                              context.read<HistoryViewModel>().saveMovies(moviesList);
 
                             }),
                         Row(

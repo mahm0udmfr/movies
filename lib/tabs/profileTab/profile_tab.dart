@@ -29,14 +29,12 @@ class _ProfileTabState extends State<ProfileTab>
     with SingleTickerProviderStateMixin {
   ProfileTabViewModel viewModel = ProfileTabViewModel();
   WatchListViewModel watchListViewModel = WatchListViewModel();
-  HistoryViewModel historyViewModel = HistoryViewModel();
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     viewModel.getUserData();
-    historyViewModel.getHistoryMovies();
     String? token = MyServices.getString("Token");
     if (token != null) {
       watchListViewModel.getAllFavoriteMovies(token: token);
@@ -102,17 +100,24 @@ class _ProfileTabState extends State<ProfileTab>
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Text(
-                                  historyViewModel.historyMovies.length.toString() ?? "0",
-                                  style: AppStyles.bold24White,
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.history,
-                                  style: AppStyles.bold24White,
-                                ),
-                              ],
+                            BlocBuilder<HistoryViewModel, HistoryState>(
+                              bloc: context.read<HistoryViewModel>(),
+                              builder: (context, state) {
+                                return Column(
+                                  children: [
+                                    Text(
+                                      state is HistorySuccessState
+                                          ? state.historyMovies.length.toString()
+                                          : "0",
+                                      style: AppStyles.bold24White,
+                                    ),
+                                    Text(
+                                      AppLocalizations.of(context)!.history,
+                                      style: AppStyles.bold24White,
+                                    ),
+                                  ],
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -229,7 +234,7 @@ class _ProfileTabState extends State<ProfileTab>
                           },
                         ),
                         BlocBuilder<HistoryViewModel, HistoryState>(
-                          bloc: historyViewModel,
+                          bloc: context.read<HistoryViewModel>(),
                           builder: (context, state) {
                             if (state is HistoryLoadingState) {
                               return Center(child: CircularProgressIndicator());

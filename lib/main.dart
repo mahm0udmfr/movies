@@ -13,6 +13,8 @@ import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
 import 'package:movies/tabs/hometab/home_tab.dart';
 import 'package:movies/tabs/movie_details/movie_details.dart';
+import 'package:movies/tabs/profileTab/cubit/history_view_model.dart';
+import 'package:movies/tabs/profileTab/cubit/profile_tab_view_model.dart';
 import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/utils/apptheme.dart';
 import 'package:movies/utils/bloc_observer.dart';
@@ -30,7 +32,14 @@ void main() async {
   Hive.registerAdapter(MovieDetailsAdapter());
   Hive.init(directory.path);
   await MyServices.init();
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (_) => HistoryViewModel()),
+      BlocProvider(create: (_) => ProfileTabViewModel()),
+    ],
+    child: MyApp(),
+  ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -39,11 +48,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+
       create: (context) => LanguageCubit(),
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, state) {
           var languageCubit = context.read<LanguageCubit>();
           return MaterialApp(
+
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             theme: Apptheme.darkTheme,
