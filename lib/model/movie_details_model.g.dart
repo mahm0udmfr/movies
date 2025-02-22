@@ -20,7 +20,7 @@ class MovieDetailsAdapter extends TypeAdapter<MovieDetails> {
       id: fields[0] as int?,
       title: fields[1] as String?,
       year: fields[4] as int?,
-      rating: fields[5] as int?,
+      rating: fields[5] as num?,
       largeCoverImage: fields[2] as String?,
     );
   }

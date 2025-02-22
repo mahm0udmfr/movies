@@ -82,7 +82,7 @@ class Movies {
   String? titleLong;
   String? slug;
   int? year;
-  double? rating;
+  num? rating;
   int? runtime;
   List<String>? genres;
   String? summary;
@@ -128,7 +128,7 @@ class Movies {
     if(json["year"] is int) {
       year = json["year"];
     }
-    if(json["rating"] is double) {
+    if(json["rating"] is num) {
       rating = json["rating"];
     }
     if(json["runtime"] is int) {

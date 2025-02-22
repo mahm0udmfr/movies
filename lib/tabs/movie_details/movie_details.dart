@@ -32,7 +32,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-  Size   screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -110,7 +110,49 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         Navigator.of(context).pop(),
                                     icon: Image.asset(ImageAssets.arrowBack),
                                   ),
-                                  Image.asset(ImageAssets.saveMovie),
+                                  IconButton(
+                                    onPressed: () async {
+                                      bool isFavorite =
+                                          await viewModel.checkIfFavorite(
+                                              state.movieDetails.id.toString());
+                                      if (isFavorite) {
+                                        viewModel.removeMovieFromFavorite(
+                                            state.movieDetails.id.toString());
+                                      } else {
+                                        viewModel.addMovieToFavorite(
+                                            state.movieDetails.id.toString(),
+                                            state.movieDetails.title.toString(),
+                                            state.movieDetails.rating ?? 0,
+                                            state.movieDetails.backgroundImage
+                                                .toString(),
+                                            state.movieDetails.year.toString());
+                                      }
+                                    },
+                                    icon: FutureBuilder<bool>(
+                                      future: viewModel.checkIfFavorite(
+                                          state.movieDetails.id.toString()),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator(
+                                              color: AppColor
+                                                  .white); // Show loading indicator
+                                        } else if (snapshot.hasError) {
+                                          return Icon(Icons.error,
+                                              color: AppColor
+                                                  .red); // Show error icon
+                                        } else {
+                                          bool isFavorite =
+                                              snapshot.data ?? false;
+                                          return Image.asset(
+                                            isFavorite
+                                                ? ImageAssets.isFavoriteTrue
+                                                : ImageAssets.saveMovie,
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -150,18 +192,21 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             onPressed: () {
                               launchInAppWithBrowserOptions(
                                   Uri.parse(state.movieDetails.url ?? ""));
-                              List<MovieDetails> moviesList = [state.movieDetails];
-                              context.read<HistoryViewModel>().saveMovies(moviesList);
-
+                              List<MovieDetails> moviesList = [
+                                state.movieDetails
+                              ];
+                              context
+                                  .read<HistoryViewModel>()
+                                  .saveMovies(moviesList);
                             }),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             FavoriteDateTime(
-                                number: state.movieDetails.likeCount ?? 0,
+                                number: state.movieDetails.likeCount!,
                                 url: ImageAssets.yellowFavorite),
                             FavoriteDateTime(
-                                number: state.movieDetails.runtime ?? 0,
+                                number: state.movieDetails.runtime!,
                                 url: ImageAssets.movieTime),
                             FavoriteDateTime(
                                 number: state.movieDetails.rating ?? 0,
@@ -170,11 +215,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                         titleText("Screen Shots"),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage1 ?? "",screenSize),
+                            state.movieDetails.largeScreenshotImage1 ?? "",
+                            screenSize),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage2 ?? "",screenSize),
+                            state.movieDetails.largeScreenshotImage2 ?? "",
+                            screenSize),
                         movieScreenShots(
-                            state.movieDetails.largeScreenshotImage3 ?? "",screenSize),
+                            state.movieDetails.largeScreenshotImage3 ?? "",
+                            screenSize),
                         titleText("Similar"),
                         BlocBuilder(
                             bloc: viewModel,
@@ -209,10 +257,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                             Navigator.of(context).pushNamed(
                                                 MovieDetailsScreen.routeName);
                                           },
-                                          child: similarMovies(viewModel
-                                                  .suggestionMovies[index]
-                                                  .smallCoverImage ??
-                                              ""),
+                                          child: similarMovies(
+                                              viewModel.suggestionMovies[index]
+                                                      .backgroundImage ??
+                                                  "",
+                                              viewModel.suggestionMovies[index]
+                                                  .rating
+                                                  .toString()),
                                         );
                                       }),
                                 );
@@ -284,7 +335,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     }
   }
 
-  Widget movieScreenShots(String screenShotUrl,Size screenSize) {
+  Widget movieScreenShots(String screenShotUrl, Size screenSize) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: CachedNetworkImage(
@@ -300,9 +351,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget similarMovies(String? imagePath) {
+  Widget similarMovies(String? imagePath, String? rating) {
     return Movieslist(
       imagePath: imagePath,
+      rating: rating,
     );
   }
 }

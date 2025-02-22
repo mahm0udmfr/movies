@@ -74,10 +74,10 @@ class MovieDetails extends HiveObject{
   @HiveField(4)
   int? year;
   @HiveField(5)
-  int? rating;
-  int? runtime;
+  num? rating;
+  num? runtime;
   List<String>? genres;
-  int? likeCount;
+  num? likeCount;
   String? descriptionIntro;
   String? descriptionFull;
   String? ytTrailerCode;
@@ -159,17 +159,17 @@ class MovieDetails extends HiveObject{
     if (json["year"] is int) {
       year = json["year"];
     }
-    if (json["rating"] is int) {
+    if (json["rating"] is num) {
       rating = json["rating"];
     }
-    if (json["runtime"] is int) {
+    if (json["runtime"] is num) {
       runtime = json["runtime"];
     }
     if (json["genres"] is List) {
       genres =
           json["genres"] == null ? null : List<String>.from(json["genres"]);
     }
-    if (json["like_count"] is int) {
+    if (json["like_count"] is num) {
       likeCount = json["like_count"];
     }
     if (json["description_intro"] is String) {

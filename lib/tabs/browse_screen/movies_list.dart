@@ -10,7 +10,7 @@ class Movieslist extends StatelessWidget {
 
   String? name;
 
-  Movieslist({super.key, this.imagePath, this.name, this.rating});
+  Movieslist({super.key, this.imagePath, this.name,required this.rating});
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;

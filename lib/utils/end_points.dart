@@ -8,4 +8,6 @@ class EndPoints {
   static const String suggestions = "/api/v2/movie_suggestions.json";
   static const String allFavorites = "/favorites/all";
   static const String addToFavorites = "/favorites/add";
+  static const String isFavorite = "/favorites/is-favorite/";
+static const String removeFromFavorites = "/favorites/remove/";
 }
