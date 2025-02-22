@@ -7,7 +7,7 @@ import 'package:movies/Auth/Login/cubit/login_screen_view_model.dart';
 import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/Auth/register/register_screen.dart';
 import 'package:movies/cubit/language_cubit.dart';
-import 'package:movies/home_screen.dart';
+import 'package:movies/main_screen/home_screen.dart';
 import 'package:movies/utils/app_styles.dart';
 import 'package:movies/utils/colors.dart';
 import 'package:movies/utils/dialog_utils.dart';

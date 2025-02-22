@@ -5,7 +5,7 @@ import 'package:movies/Auth/forget_password/forget_password.dart';
 import 'package:movies/Auth/reset_password/reset_password_view.dart';
 import 'package:movies/cubit/language_cubit.dart';
 import 'package:movies/cubit/language_state.dart';
-import 'package:movies/home_screen.dart';
+import 'package:movies/main_screen/home_screen.dart';
 import 'package:movies/onboarding/onboarding.dart';
 import 'package:movies/profile/updateprofile.dart';
 import 'package:movies/services.dart';
@@ -14,6 +14,7 @@ import 'package:movies/tabs/movie_details/movie_details.dart';
 import 'package:movies/tabs/profileTab/profile_tab.dart';
 import 'package:movies/utils/apptheme.dart';
 import 'package:movies/utils/bloc_observer.dart';
+
 import 'Auth/Login/loginscreen.dart';
 import 'Auth/register/register_screen.dart';
 
